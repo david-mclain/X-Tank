@@ -3,6 +3,8 @@ package XTank;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
+
 public class Player extends GameObject {
 	
 	private static final int DEFAULT_HEALTH = 5;
@@ -34,5 +36,11 @@ public class Player extends GameObject {
 	public void setOutput(PrintWriter output) {  this.output = output;  }
 	public Scanner getInput() {  return input;  }
 	public PrintWriter getOutput() {  return output;  }
+
+	@Override
+	public ImageIcon getImage() {
+		//if ()
+		return null;
+	}
 	
 }

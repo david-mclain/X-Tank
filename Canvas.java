@@ -18,9 +18,31 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
-
+	private Game game;
 	Canvas() {
 		super();
+		game = Game.getGame();
+		this.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		repaint();
 	}
 	
@@ -30,7 +52,10 @@ public class Canvas extends JPanel {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(660, 0, 140, 600);
 		
-		
+		List<GameObject> gameObjects = game.getGameObjects();
+		for (GameObject obj : gameObjects) {
+			obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
+		}
 		
 		g.setColor(Color.white);
 		g.setFont(new Font("Monospaced",Font.BOLD, 15));

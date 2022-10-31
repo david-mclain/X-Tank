@@ -1,12 +1,17 @@
 package XTank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 	private Player[] players;
 	private int curPlayers;
+	private List<GameObject> gameObjects;
 	private static Game game;
 	
 	private Game() {
 		curPlayers = 0;
+		gameObjects = new ArrayList<>();
 	}
 	
 	public static Game getGame() {
@@ -24,6 +29,10 @@ public class Game {
 	
 	public String toString() {
 		return "this is game";
+	}
+	
+	public List<GameObject> getGameObjects() {
+		return gameObjects;
 	}
 	/*
 	 * class Game 

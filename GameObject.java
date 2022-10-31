@@ -1,6 +1,8 @@
 package XTank;
 
-public class GameObject {
+import javax.swing.ImageIcon;
+
+public abstract class GameObject {
 	private int x;
 	private int y;
 	private int angle;
@@ -50,6 +52,8 @@ public class GameObject {
 	public int getAngle() {  return angle;  }
 
 	public void setAngle(int angle) {  this.angle = angle;  }
+	
+	public abstract ImageIcon getImage();
 	
 	public String toString() {
 		String toRet = "";
