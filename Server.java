@@ -21,20 +21,17 @@ import java.util.concurrent.Executors;
  */
 public class Server {
 	private static Game game;
-    public static void main(String[] args) throws Exception 
-    {
-        try (var listener = new ServerSocket(58901)) 
-        {
-            System.out.println("X-Tank server is running...");
-            var pool = Executors.newFixedThreadPool(200);
-            while (true) 
-            {
-                game = Game.getGame();
-//                pool.execute(new Play(listener.accept(), new Player('X'), game));
-//                pool.execute(new Play(listener.accept(), new Player('O'), game));
-            }
-        }
-    }
+	public static void main(String[] args) throws Exception {
+		try (var listener = new ServerSocket(58901)) {
+			System.out.println("X-Tank server is running...");
+			listener.setSoTimeout(30000);
+			var pool = Executors.newFixedThreadPool(200);
+			game = Game.getGame();
+			while (true) {
+				pool.execute(new Play(listener.accept(), new Player(game.getCurPlayer()), game));
+			}
+		}
+	}
 }
 /*
 
@@ -53,22 +50,21 @@ class Player
 	public PrintWriter getOutput() {return output;}
 }
 
-    /**
-     * A Player is identified by a character mark which is either 'X' or 'O'. For
-     * communication with the client the player has a socket and associated Scanner
-     * and PrintWriter.
-     */
+	/**
+	 * A Player is identified by a character mark which is either 'X' or 'O'. For
+	 * communication with the client the player has a socket and associated Scanner
+	 * and PrintWriter.
+	 */
 class Play implements Runnable {
 	Player you;
-	Player opponent=null;
 	Game game;
 	Socket socket;
 
-	public Play(Socket socket, Player player, Game game) 
-	{
+	public Play(Socket socket, Player player, Game game) {
 		this.socket = socket;
 		this.you = player;
 		this.game = game;
+		game.addPlayer(you);
 //		game.setCurrentPlayer(you);
 //		if (game.getPlayer1() == null)
 //			game.setPlayer1(you);
@@ -77,23 +73,19 @@ class Play implements Runnable {
 	}
 
 	@Override
-	public void run() 
-	{
-		try 
-		{
-//			you.setInput(new Scanner(socket.getInputStream()));
-//			you.setOutput(new PrintWriter(socket.getOutputStream(), true));
-//			you.getOutput().println("WELCOME " + you.getMark());
-//			processCommands();
+	public void run() {
+		try {
+			you.setInput(new Scanner(socket.getInputStream()));
+			you.setOutput(new PrintWriter(socket.getOutputStream(), true));
+			//you.getOutput().println("WELCOME " + you.getMark());
+			processCommands();
 		} 
-		catch (Exception e) 
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 		} 
 	}
 
-	private void processCommands() 
-	{
+	private void processCommands() {
 //		while (you.getInput().hasNextLine()) 
 //		{
 //			if (you == game.getPlayer1()) opponent = game.getPlayer2();
@@ -140,5 +132,5 @@ class Play implements Runnable {
 //		}
 //		game.getBoard()[location] = game.getCurrentPlayer();
 //		game.setCurrentPlayer(opponent);
-//	}        
+//	}		
 }

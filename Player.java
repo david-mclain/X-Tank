@@ -1,11 +1,16 @@
 package XTank;
 
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Player extends GameObject {
 	
 	private static final int DEFAULT_HEALTH = 5;
 	
 	private int playerNumber;
 	private int health;
+	private Scanner input;
+	private PrintWriter output;
 	
 	public Player(int playerNumber) {
 		super(playerNumber);
@@ -24,5 +29,10 @@ public class Player extends GameObject {
 	public String toString() {
 		return "{ playerNumber : " + playerNumber + "; " + super.toString() + "health : " + health + "; }";
 	}
+	
+	public void setInput(Scanner input) {  this.input = input;  }
+	public void setOutput(PrintWriter output) {  this.output = output;  }
+	public Scanner getInput() {  return input;  }
+	public PrintWriter getOutput() {  return output;  }
 	
 }

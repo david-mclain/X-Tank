@@ -21,6 +21,10 @@ public class Game {
 	public void addPlayer(Player player) {
 		players[curPlayers++] = player;
 	}
+	
+	public String toString() {
+		return "this is game";
+	}
 	/*
 	 * class Game 
 {

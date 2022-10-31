@@ -7,17 +7,17 @@ public class GameObject {
 	
 	public GameObject(int playerNumber) {
 		int x, y, angle;
-		if (playerNumber == 1) {
+		if (playerNumber == 0) {
 			x = 250;
 			y = 50;
 			angle = 180;
 		}
-		else if (playerNumber == 2) {
+		else if (playerNumber == 1) {
 			x = 250;
 			y = 650;
 			angle = 0;
 		}
-		else if (playerNumber == 3) {
+		else if (playerNumber == 2) {
 			x = 450;
 			y = 350;
 			angle = 90;
