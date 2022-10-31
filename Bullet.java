@@ -7,6 +7,6 @@ public class Bullet extends GameObject{
 	}
 
 	public String toString() {
-		return "{ bullet : " + "true" + "; " + super.toString();
+		return "{ bullet : " + "true; " + super.toString() + "}";
 	}
 }

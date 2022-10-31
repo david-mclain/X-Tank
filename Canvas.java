@@ -2,6 +2,7 @@ package XTank;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -23,25 +24,30 @@ public class Canvas extends JPanel {
 		repaint();
 	}
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D)g;
-		g.clearRect(0, 0, 500, 800);
-		g2.setColor(Color.WHITE);
-	    Rectangle rect2 = new Rectangle(200, 200, 20, 20);
-
-	    g2.rotate(Math.toRadians(45));
-	    g2.draw(rect2);
-	    g2.fill(rect2);
+	public void paint(Graphics g) {
 		g.setColor(Color.black);
-		Rectangle r = new Rectangle(100, 100, 20, 20);
-		Path2D.Double path = new Path2D.Double();
-		path.append(r, false);
-
-		AffineTransform t = new AffineTransform();
-		t.rotate(45);
-		path.transform(t);
-		g2.draw(path);
-		g.drawRect(rect2.x, rect2.y, rect2.height, rect2.height);
+		g.fillRect(0, 0, 650, 600);
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(660, 0, 140, 600);
+		
+		
+		
+		g.setColor(Color.white);
+		g.setFont(new Font("Monospaced",Font.BOLD, 15));
+		g.drawString("Scores", 700,30);
+		g.drawString("Player 1:  0", 670,60);
+		g.drawString("Player 2:  0", 670,90);
+		
+		g.drawString("Lives", 700,150);
+		g.drawString("Player 1:  0", 670,180);
+		g.drawString("Player 2:  0", 670,210);
+		
+		
+//		// draw solid bricks
+//		br.drawSolids(this, g);
+//		
+//		// draw Breakable bricks	
+//		br.draw(this, g);
 	}
+	
 }

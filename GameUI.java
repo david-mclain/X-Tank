@@ -1,19 +1,19 @@
 package XTank;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class GameUI {
+public class GameUI extends JFrame {
 	JPanel canvas;
-	JFrame shell;
-	public GameUI() {
-		shell = new JFrame("X-Tank");
-		shell.setTitle("X-Tank");
+	public GameUI(String s) {
+		super(s);
 		canvas = new Canvas();
-		shell.add(canvas);
-		shell.pack();
-		shell.setVisible(true);
-		shell.setSize(800, 700);
-		canvas.repaint();
+		this.setBounds(10, 10, 800, 630);
+		this.setBackground(Color.gray);
+		this.setResizable(false);
+		this.add(canvas);
+		this.setVisible(true);
 	}
 }

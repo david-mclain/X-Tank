@@ -7,8 +7,8 @@ public class Player extends GameObject {
 	private int playerNumber;
 	private int health;
 	
-	public Player(int x, int  y, int angle, int playerNumber) {
-		super(x, y, angle);
+	public Player(int playerNumber) {
+		super(playerNumber);
 		this.setPlayerNumber(playerNumber);
 		this.setHealth(DEFAULT_HEALTH);
 	}
@@ -22,7 +22,7 @@ public class Player extends GameObject {
 	public void setHealth(int health) {  this.health = health;  }
 	
 	public String toString() {
-		return "{ playerNumber : " + playerNumber + "; " + super.toString() + "health : " + health + " }";
+		return "{ playerNumber : " + playerNumber + "; " + super.toString() + "health : " + health + "; }";
 	}
 	
 }
