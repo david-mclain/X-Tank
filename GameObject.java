@@ -5,40 +5,39 @@ import javax.swing.ImageIcon;
 public abstract class GameObject {
 	private int x;
 	private int y;
-	private int angle;
+	private int dir;
 	
 	public GameObject(int playerNumber) {
-		int x, y, angle;
+		int x, y, dir;
 		if (playerNumber == 0) {
 			x = 250;
 			y = 50;
-			angle = 180;
+			dir = 3;
 		}
 		else if (playerNumber == 1) {
 			x = 250;
 			y = 650;
-			angle = 0;
+			dir = 1;
 		}
 		else if (playerNumber == 2) {
 			x = 450;
 			y = 350;
-			angle = 90;
+			dir = 2;
 		}
 		else {
 			x = 50;
 			y = 350;
-			angle = 270;
+			dir = 4;
 		}
-		
 		setX(x);
 		setY(y);
-		setAngle(angle);
+		setDir(dir);
 	}
 	
 	public GameObject(int x, int y, int angle) {
 		setX(x);
 		setY(y);
-		setAngle(angle);
+		setDir(angle);
 	}
 	
 	public int getX() {  return x;  }
@@ -49,15 +48,15 @@ public abstract class GameObject {
 
 	public void setY(int y) {  this.y = y;  }
 
-	public int getAngle() {  return angle;  }
+	public int getDir() {  return dir;  }
 
-	public void setAngle(int angle) {  this.angle = angle;  }
+	public void setDir(int angle) {  this.dir = angle;  }
 	
 	public abstract ImageIcon getImage();
 	
 	public String toString() {
 		String toRet = "";
-		toRet += "angle :" + angle + "; x : " + x + "; y : " + y + "; ";
+		toRet += "dir :" + dir + "; x : " + x + "; y : " + y + "; ";
 		return toRet;
 	}
 }

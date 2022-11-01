@@ -12,37 +12,22 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
 	private Game game;
+	private BufferedImage image;
+	private ImageIcon icon;
 	Canvas() {
 		super();
 		game = Game.getGame();
-		this.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
 		repaint();
 	}
 	
@@ -53,9 +38,17 @@ public class Canvas extends JPanel {
 		g.fillRect(660, 0, 140, 600);
 		
 		List<GameObject> gameObjects = game.getGameObjects();
-		for (GameObject obj : gameObjects) {
-			obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
-		}
+//		for (GameObject obj : gameObjects) {
+//			obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
+//		}
+		getImage(1);
+		icon.paintIcon(this, g, 50, 50);
+		getImage(2);
+		icon.paintIcon(this, g, 100, 50);
+		getImage(3);
+		icon.paintIcon(this, g, 150, 50);
+		getImage(4);
+		icon.paintIcon(this, g, 200, 50);
 		
 		g.setColor(Color.white);
 		g.setFont(new Font("Monospaced",Font.BOLD, 15));
@@ -73,6 +66,15 @@ public class Canvas extends JPanel {
 //		
 //		// draw Breakable bricks	
 //		br.draw(this, g);
+	}
+	
+	public void getImage(int x) {
+		try {
+			image = ImageIO.read(Canvas.class.getResourceAsStream("tank_1_direction_" + x + ".png"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		icon = new ImageIcon(image);
 	}
 	
 }

@@ -16,23 +16,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Client {
-	private JFrame frame = new GameUI("X-Tank");
+	private JFrame frame;
 	
 	private Socket socket;
 	private Scanner in;
 	private PrintWriter out;
 	
 	public Client(String serverAddress) throws Exception {
-		socket = new Socket(serverAddress, 58901);
-		in = new Scanner(socket.getInputStream());
-		out = new PrintWriter(socket.getOutputStream(), true);
+		frame = new GameUI("X-Tank");
+//		socket = new Socket(serverAddress, 58901);
+//		in = new Scanner(socket.getInputStream());
+//		out = new PrintWriter(socket.getOutputStream(), true);
 
 //		messageLabel.setBackground(Color.lightGray);
 //		frame.getContentPane().add(messageLabel, BorderLayout.SOUTH);
 
-		var boardPanel = new JPanel();
-		boardPanel.setBackground(Color.black);
-		boardPanel.setLayout(new GridLayout(3, 3, 2, 2));
+//		var boardPanel = new JPanel();
+//		boardPanel.setBackground(Color.black);
+//		boardPanel.setLayout(new GridLayout(3, 3, 2, 2));
 //		for (var i = 0; i < board.length; i++) {
 //			final int j = i;
 //			board[i] = new Square();
@@ -44,7 +45,7 @@ public class Client {
 //			});
 //			boardPanel.add(board[i]);
 //		}
-		frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
+		//frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
 	}
 	
 	public void play() throws Exception {
