@@ -25,9 +25,11 @@ public class Canvas extends JPanel {
 	private Game game;
 	private BufferedImage image;
 	private ImageIcon icon;
-	Canvas() {
+	private Player you;
+	Canvas(Player you) {
 		super();
 		game = Game.getGame();
+		this.you = you;
 		repaint();
 	}
 	
@@ -41,20 +43,46 @@ public class Canvas extends JPanel {
 //		for (GameObject obj : gameObjects) {
 //			obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
 //		}
-		getImage(1);
-		icon.paintIcon(this, g, 50, 50);
-		getImage(2);
-		icon.paintIcon(this, g, 100, 50);
-		getImage(3);
-		icon.paintIcon(this, g, 150, 50);
-		getImage(4);
-		icon.paintIcon(this, g, 200, 50);
+		System.out.println(you == null);
+		if (you != null)
+			you.getImage().paintIcon(this, g, 50, 50);
+		
+		for (int i = 1; i <= 4; i++) {
+			if (i == 1) {
+				you.getImage(3).paintIcon(this, g, 300, 25);
+			}
+			else if (i == 2) {
+				you.getImage(4).paintIcon(this, g, 575, 250);
+			}
+			else if (i == 3) {
+				you.getImage(1).paintIcon(this, g, 300, 525);
+			}
+			else {
+				you.getImage(2).paintIcon(this, g, 25, 250);
+			}
+		}
+		
+//		getImage(1);
+//		icon.paintIcon(this, g, 50, 50);
+//		getImage(2);
+//		icon.paintIcon(this, g, 100, 50);
+//		getImage(3);
+//		icon.paintIcon(this, g, 150, 50);
+//		getImage(4);
+//		icon.paintIcon(this, g, 200, 50);
 		
 		g.setColor(Color.white);
 		g.setFont(new Font("Monospaced",Font.BOLD, 15));
 		g.drawString("Scores", 700,30);
-		g.drawString("Player 1:  0", 670,60);
-		g.drawString("Player 2:  0", 670,90);
+//		Player[] players = game.getPlayers();
+//		for (int i = 0; i < players.length; i++) {
+//			Player player = players[i];
+//			if (player != null) {
+//				g.drawString("Player " + player.getPlayerNumber() + ":  0", 670, 60 + i * 30);
+//			}
+//		}
+//		g.drawString("Player 1:  0", 670,60);
+//		g.drawString("Player 2:  0", 670,90);
 		
 		g.drawString("Lives", 700,150);
 		g.drawString("Player 1:  0", 670,180);

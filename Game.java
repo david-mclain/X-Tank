@@ -21,14 +21,14 @@ public class Game {
 		return game;
 	}
 	
-	public int getCurPlayer() {  return curPlayers;  }
+	public int getCurPlayer() {  return curPlayers + 1;  }
 	
 	public void addPlayer(Player player) {
 		players[curPlayers++] = player;
 	}
 	
-	public String toString() {
-		return "this is game";
+	public Player[] getPlayers() {
+		return players;
 	}
 	
 	public List<GameObject> getGameObjects() {

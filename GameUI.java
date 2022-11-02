@@ -9,9 +9,11 @@ import javax.swing.JPanel;
 
 public class GameUI extends JFrame {
 	JPanel canvas;
-	public GameUI(String s) {
+	Player cur;
+	public GameUI(String s, Player p) {
 		super(s);
-		canvas = new Canvas();
+		this.cur = p;
+		canvas = new Canvas(cur);
 		this.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
@@ -29,6 +31,9 @@ public class GameUI extends JFrame {
 				else if (e.getKeyCode() == KeyEvent.VK_A) {
 					move(4);
 				}
+				else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					move(10);
+				}
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {}
@@ -38,9 +43,11 @@ public class GameUI extends JFrame {
 		this.setResizable(false);
 		this.add(canvas);
 		this.setVisible(true);
+		cur = p;
 	}
 	
 	public void move(int x) {
+		cur.setImage(x);
 		switch(x) {
 		case 1:
 			System.out.println("up");
@@ -54,6 +61,10 @@ public class GameUI extends JFrame {
 		case 4:
 			System.out.println("left");
 			break;
+		case 10:
+			System.out.println("shoot");
+			break;
 		}
+		canvas.repaint();
 	}
 }

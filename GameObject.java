@@ -1,37 +1,48 @@
 package XTank;
 
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
-public abstract class GameObject {
+@SuppressWarnings("serial")
+public abstract class GameObject implements Serializable {
 	private int x;
 	private int y;
 	private int dir;
 	
-	public GameObject(int playerNumber) {
-		int x, y, dir;
-		if (playerNumber == 0) {
-			x = 250;
-			y = 50;
-			dir = 3;
+	public GameObject(int playerNumber) throws IllegalArgumentException {
+		try {
+			int x, y, dir;
+			if (playerNumber == 1) {
+				x = 325;
+				y = 50;
+				dir = 3;
+			}
+			else if (playerNumber == 2) {
+				x = 600;
+				y = 300;
+				dir = 4;
+			}
+			else if (playerNumber == 3) {
+				x = 325;
+				y = 550;
+				dir = 1;
+			}
+			else if (playerNumber == 4) {
+				x = 50;
+				y = 300;
+				dir = 2;
+			}
+			else {
+				throw new IllegalArgumentException("Too many players");
+			}
+			setX(x);
+			setY(y);
+			setDir(dir);
 		}
-		else if (playerNumber == 1) {
-			x = 250;
-			y = 650;
-			dir = 1;
+		finally {
+			
 		}
-		else if (playerNumber == 2) {
-			x = 450;
-			y = 350;
-			dir = 2;
-		}
-		else {
-			x = 50;
-			y = 350;
-			dir = 4;
-		}
-		setX(x);
-		setY(y);
-		setDir(dir);
 	}
 	
 	public GameObject(int x, int y, int angle) {
@@ -60,3 +71,4 @@ public abstract class GameObject {
 		return toRet;
 	}
 }
+;
