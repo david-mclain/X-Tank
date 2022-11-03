@@ -65,7 +65,7 @@ public class Player extends GameObject {
 		System.out.println(this.playerNumber);
 		for (int i = 1; i <= 4; i++) {
 			try {
-				temp = ImageIO.read(Player.class.getResourceAsStream("tank_" + 1 + "_direction_" + i + ".png"));
+				temp = ImageIO.read(Player.class.getResourceAsStream("tank_" + 3 + "_direction_" + i + ".png"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
