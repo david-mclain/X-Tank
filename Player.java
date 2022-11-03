@@ -8,7 +8,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Player extends GameObject {
+public class Player {
 	
 	private static final int DEFAULT_HEALTH = 5;
 	
@@ -17,16 +17,16 @@ public class Player extends GameObject {
 	private Scanner input;
 	private PrintWriter output;
 	
-	private ImageIcon[] images;
+	private Tank tank;
 	
-	private ImageIcon curImage;
+	int[] moveX = {0, 20, 0, -20};
+	int[] moveY = {-20, 0, 20, 0};
 	
 	public Player(int playerNumber) {
-		super(playerNumber);
+		//super(playerNumber);
 		this.setPlayerNumber(playerNumber);
 		this.setHealth(DEFAULT_HEALTH);
-		setImages();
-		curImage = images[getDir() - 1];
+		tank = new Tank(playerNumber);
 	}
 
 	public int getPlayerNumber() {  return playerNumber;  }
@@ -46,31 +46,16 @@ public class Player extends GameObject {
 	public Scanner getInput() {  return input;  }
 	public PrintWriter getOutput() {  return output;  }
 
-	public void setImage(int i) {
-		curImage = images[i - 1];
+	public void setImageAndMove(int i) {
+		this.tank.setImageAndMove(i);
 	}
 	
-	@Override
 	public ImageIcon getImage() {
-		return curImage;
+		return tank.getImage();
 	}
 	
-	public ImageIcon getImage(int x) {
-		return images[x - 1];
-	}
-	
-	private void setImages() {
-		BufferedImage temp = null;
-		images = new ImageIcon[4];
-		System.out.println(this.playerNumber);
-		for (int i = 1; i <= 4; i++) {
-			try {
-				temp = ImageIO.read(Player.class.getResourceAsStream("tank_" + 1 + "_direction_" + i + ".png"));
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			images[i - 1] = new ImageIcon(temp);
-		}
+	public Tank getTank() {
+		return tank;
 	}
 	
 }

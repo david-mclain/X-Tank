@@ -47,7 +47,7 @@ public class GameUI extends JFrame {
 	}
 	
 	public void move(int x) {
-		cur.setImage(x);
+		cur.setImageAndMove(x);
 		switch(x) {
 		case 1:
 			System.out.println("up");

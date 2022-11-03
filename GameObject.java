@@ -19,8 +19,8 @@ public abstract class GameObject implements Serializable {
 				dir = 3;
 			}
 			else if (playerNumber == 2) {
-				x = 600;
-				y = 300;
+				x = 550;
+				y = 250;
 				dir = 4;
 			}
 			else if (playerNumber == 3) {

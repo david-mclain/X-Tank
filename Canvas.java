@@ -45,22 +45,22 @@ public class Canvas extends JPanel {
 //		}
 		System.out.println(you == null);
 		if (you != null)
-			you.getImage().paintIcon(this, g, 50, 50);
+			you.getImage().paintIcon(this, g, you.getTank().getX(), you.getTank().getY());
 		
-		for (int i = 1; i <= 4; i++) {
-			if (i == 1) {
-				you.getImage(3).paintIcon(this, g, 300, 25);
-			}
-			else if (i == 2) {
-				you.getImage(4).paintIcon(this, g, 575, 250);
-			}
-			else if (i == 3) {
-				you.getImage(1).paintIcon(this, g, 300, 525);
-			}
-			else {
-				you.getImage(2).paintIcon(this, g, 25, 250);
-			}
-		}
+//		for (int i = 1; i <= 4; i++) {
+//			if (i == 1) {
+//				you.getImage(3).paintIcon(this, g, 300, 25);
+//			}
+//			else if (i == 2) {
+//				you.getImage(4).paintIcon(this, g, 575, 250);
+//			}
+//			else if (i == 3) {
+//				you.getImage(1).paintIcon(this, g, 300, 525);
+//			}
+//			else {
+//				you.getImage(2).paintIcon(this, g, 25, 250);
+//			}
+//		}
 		
 //		getImage(1);
 //		icon.paintIcon(this, g, 50, 50);
@@ -84,9 +84,9 @@ public class Canvas extends JPanel {
 //		g.drawString("Player 1:  0", 670,60);
 //		g.drawString("Player 2:  0", 670,90);
 		
-		g.drawString("Lives", 700,150);
-		g.drawString("Player 1:  0", 670,180);
-		g.drawString("Player 2:  0", 670,210);
+		g.drawString("Health", 700,150);
+//		g.drawString("Player 1:  0", 670,180);
+//		g.drawString("Player 2:  0", 670,210);
 		
 		
 //		// draw solid bricks
@@ -98,7 +98,7 @@ public class Canvas extends JPanel {
 	
 	public void getImage(int x) {
 		try {
-			image = ImageIO.read(Canvas.class.getResourceAsStream("tank_1_direction_" + x + ".png"));
+			image = ImageIO.read(Canvas.class.getResourceAsStream("tank_" + x + "_direction_" + x + ".png"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
