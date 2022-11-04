@@ -34,6 +34,12 @@ public class Tank extends GameObject {
 		return images[x - 1];
 	}
 	
+	public void processMove(int i) {
+		if (i <= 4) {
+			setImageAndMove(i);
+		}
+	}
+	
 	private void setImages() {
 		BufferedImage temp = null;
 		images = new ImageIcon[4];

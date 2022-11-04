@@ -8,11 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class GameUI extends JFrame {
-	JPanel canvas;
-	Player cur;
+	private JPanel canvas;
+	private Player cur;
+	private Tank tank;
 	public GameUI(String s, Player p) {
 		super(s);
 		this.cur = p;
+		tank = cur.getTank();
 		canvas = new Canvas(cur);
 		this.addKeyListener(new KeyListener() {
 			@Override
@@ -47,24 +49,7 @@ public class GameUI extends JFrame {
 	}
 	
 	public void move(int x) {
-		cur.setImageAndMove(x);
-		switch(x) {
-		case 1:
-			System.out.println("up");
-			break;
-		case 2:
-			System.out.println("right");
-			break;
-		case 3:
-			System.out.println("down");
-			break;
-		case 4:
-			System.out.println("left");
-			break;
-		case 10:
-			System.out.println("shoot");
-			break;
-		}
+		tank.processMove(x);
 		canvas.repaint();
 	}
 }
