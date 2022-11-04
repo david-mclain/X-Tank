@@ -18,9 +18,7 @@ public class Player {
 	private PrintWriter output;
 	
 	private Tank tank;
-	
-	int[] moveX = {0, 20, 0, -20};
-	int[] moveY = {-20, 0, 20, 0};
+	private Bullet bullet;
 	
 	public Player(int playerNumber) {
 		//super(playerNumber);
@@ -48,6 +46,15 @@ public class Player {
 
 	public void setImageAndMove(int i) {
 		this.tank.setImageAndMove(i);
+	}
+	
+	public void processMove(int x) {
+		if (x <= 4) {
+			tank.processMove(x);
+		}
+		else if (x == 10) {
+			
+		}
 	}
 	
 	public ImageIcon getImage() {

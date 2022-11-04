@@ -26,7 +26,8 @@ public class Client {
 	
 	public Client(String serverAddress) throws Exception {
 		game = Game.getGame();
-		you = new Player(2);
+		you = new Player(game.getCurPlayer());
+		game.addPlayer(you);
 		frame = new GameUI("X-Tank", you);
 //		socket = new Socket(serverAddress, 58901);
 //		in = new Scanner(socket.getInputStream());

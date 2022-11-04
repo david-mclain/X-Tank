@@ -40,10 +40,9 @@ public class Canvas extends JPanel {
 		g.fillRect(660, 0, 140, 600);
 		
 		List<GameObject> gameObjects = game.getGameObjects();
-//		for (GameObject obj : gameObjects) {
-//			obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
-//		}
-		System.out.println(you == null);
+		for (GameObject obj : gameObjects) {
+			obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
+		}
 		if (you != null)
 			you.getImage().paintIcon(this, g, you.getTank().getX(), you.getTank().getY());
 		

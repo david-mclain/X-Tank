@@ -15,8 +15,8 @@ public class Tank extends GameObject {
 	
 	private ImageIcon curImage;
 		
-	int[] moveX = {0, 20, 0, -20};
-	int[] moveY = {-20, 0, 20, 0};
+	int[] moveX = {0, 10, 0, -10};
+	int[] moveY = {-10, 0, 10, 0};
 	public Tank(int x) {
 		super(x);
 		this.number = x;

@@ -7,15 +7,16 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class GameUI extends JFrame {
 	private JPanel canvas;
-	private Player cur;
+	private Player player;
 	private Tank tank;
 	public GameUI(String s, Player p) {
 		super(s);
-		this.cur = p;
-		tank = cur.getTank();
-		canvas = new Canvas(cur);
+		this.player = p;
+		tank = player.getTank();
+		canvas = new Canvas(player);
 		this.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
@@ -45,11 +46,10 @@ public class GameUI extends JFrame {
 		this.setResizable(false);
 		this.add(canvas);
 		this.setVisible(true);
-		cur = p;
 	}
 	
 	public void move(int x) {
-		tank.processMove(x);
+		player.processMove(x);
 		canvas.repaint();
 	}
 }

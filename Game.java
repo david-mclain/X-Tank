@@ -12,6 +12,7 @@ public class Game {
 	private Game() {
 		curPlayers = 0;
 		gameObjects = new ArrayList<>();
+		players = new Player[4];
 	}
 	
 	public static Game getGame() {
