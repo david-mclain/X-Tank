@@ -45,8 +45,10 @@ public class Canvas extends JPanel {
 		
 		List<GameObject> gameObjects = game.getGameObjects();
 		for (GameObject obj : gameObjects) {
-			if (obj != null)
+			if (obj != null) {
 				obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
+				g.drawRect(obj.getX(), obj.getY(), 10, 10);
+			}
 		}
 		
 //		for (int i = 1; i <= 4; i++) {

@@ -24,7 +24,7 @@ public class Client {
 	
 	private static Player you;
 	
-	public Client(String serverAddress) throws Exception {
+	public Client(String serverAddress) throws IllegalArgumentException {
 		game = Game.getGame();
 		if (game.playersFull()) {
 			throw new IllegalArgumentException("Too many players.");
