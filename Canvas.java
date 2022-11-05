@@ -15,6 +15,8 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.Timer;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,12 +30,14 @@ public class Canvas extends JPanel {
 	private Player you;
 	Canvas(Player you) {
 		super();
+		Timer timer = new Timer(8, null);
 		game = Game.getGame();
 		this.you = you;
 		repaint();
 	}
 	
 	public void paint(Graphics g) {
+		g.clearRect(0, 0, 800, 630);
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 650, 600);
 		g.setColor(Color.DARK_GRAY);
@@ -41,10 +45,9 @@ public class Canvas extends JPanel {
 		
 		List<GameObject> gameObjects = game.getGameObjects();
 		for (GameObject obj : gameObjects) {
-			obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
+			if (obj != null)
+				obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
 		}
-		if (you != null)
-			you.getImage().paintIcon(this, g, you.getTank().getX(), you.getTank().getY());
 		
 //		for (int i = 1; i <= 4; i++) {
 //			if (i == 1) {

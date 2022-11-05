@@ -11,8 +11,9 @@ public class Bullet extends GameObject {
 	private static BufferedImage image;
 	int[] moveX = {0, 20, 0, -20};
 	int[] moveY = {-20, 0, 20, 0};
-	public Bullet(int x, int y, int angle) {
-		super(x, y, angle);
+	public Bullet(int x, int y, int dir) {
+		super(x, y, dir);
+		System.out.println(this);
 		setImage();
 	}
 
@@ -35,6 +36,8 @@ public class Bullet extends GameObject {
 	}
 	
 	public void travel() {
-		
+		System.out.println("travelk");
+		this.setX(getX() + moveX[getDir() - 1]);
+		this.setY(getY() + moveY[getDir() - 1]);
 	}
 }

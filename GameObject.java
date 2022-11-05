@@ -45,10 +45,26 @@ public abstract class GameObject implements Serializable {
 		}
 	}
 	
-	public GameObject(int x, int y, int angle) {
+	public GameObject(int x, int y, int dir) {
+		if (dir == 1) {
+			x += 20;
+			y -= 10;
+		}
+		else if (dir == 2) {
+			x += 50;
+			y += 20;
+		}
+		else if (dir == 3) {
+			x += 20;
+			y += 50;
+		}
+		else {
+			x -= 10;
+			y += 20;
+		}
 		setX(x);
 		setY(y);
-		setDir(angle);
+		setDir(dir);
 	}
 	
 	public int getX() {  return x;  }

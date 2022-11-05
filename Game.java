@@ -6,6 +6,7 @@ import java.util.List;
 public class Game {
 	private Player[] players;
 	private int curPlayers;
+	private final int MAX_PLAYERS = 4;
 	private List<GameObject> gameObjects;
 	private static Game game;
 	
@@ -26,6 +27,18 @@ public class Game {
 	
 	public void addPlayer(Player player) {
 		players[curPlayers++] = player;
+	}
+	
+	public void addObject(GameObject gameObject) {
+		gameObjects.add(gameObject);
+	}
+	
+	public void refresh() {
+		gameObjects.clear();
+		for (Player p : players) {
+			if (p != null)
+				gameObjects.addAll(p.getObjects());
+		}
 	}
 	
 	public Player[] getPlayers() {
@@ -54,4 +67,8 @@ public class Game {
 }
 	 * 
 	 */
+
+	public boolean playersFull() {
+		return this.curPlayers == MAX_PLAYERS;
+	}
 }

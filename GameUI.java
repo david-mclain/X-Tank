@@ -1,22 +1,38 @@
 package XTank;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class GameUI extends JFrame {
 	private JPanel canvas;
 	private Player player;
 	private Tank tank;
+	Timer timer;
+	private Game game;
 	public GameUI(String s, Player p) {
 		super(s);
 		this.player = p;
 		tank = player.getTank();
 		canvas = new Canvas(player);
+		game = Game.getGame();
+		timer = new Timer(20, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("yes");
+				player.update();
+				canvas.repaint();
+				
+			}
+		});
+		timer.start();
 		this.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
@@ -50,6 +66,7 @@ public class GameUI extends JFrame {
 	
 	public void move(int x) {
 		player.processMove(x);
+		game.refresh();
 		canvas.repaint();
 	}
 }

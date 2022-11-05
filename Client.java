@@ -26,6 +26,9 @@ public class Client {
 	
 	public Client(String serverAddress) throws Exception {
 		game = Game.getGame();
+		if (game.playersFull()) {
+			throw new IllegalArgumentException("Too many players.");
+		}
 		you = new Player(game.getCurPlayer());
 		game.addPlayer(you);
 		frame = new GameUI("X-Tank", you);
@@ -103,8 +106,12 @@ public class Client {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
-		Client client = new Client("127.0.0.1");
+	public static void main(String[] args) {
+		try {
+			Client client = new Client("127.0.0.1");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error. Too many players in server.");
+		}
 		
 	}
 }
