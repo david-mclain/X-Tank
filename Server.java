@@ -56,9 +56,9 @@ class Player
 	 * and PrintWriter.
 	 */
 class Play implements Runnable {
-	Player you;
-	Game game;
-	Socket socket;
+	private Player you;
+	private Game game;
+	private Socket socket;
 
 	public Play(Socket socket, Player player, Game game) {
 		this.socket = socket;

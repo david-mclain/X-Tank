@@ -14,14 +14,14 @@ import javax.swing.Timer;
 public class GameUI extends JFrame {
 	private JPanel canvas;
 	private Player player;
-	Timer timer;
+	private Timer timer;
 	private Game game;
 	public GameUI(String s, Player p) {
 		super(s);
 		this.player = p;
 		canvas = new Canvas(player);
 		game = Game.getGame();
-		timer = new Timer(20, new ActionListener() {
+		timer = new Timer(16, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				player.update();

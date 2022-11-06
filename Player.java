@@ -61,7 +61,6 @@ public class Player {
 			tank.processMove(x);
 		}
 		else if (x == 10) {
-			System.out.println("shoot");
 			playerObjects.remove(bullet);
 			bullet = new Bullet(tank.getX(), tank.getY(), tank.getDir());
 			playerObjects.add(bullet);

@@ -44,7 +44,6 @@ public class Tank extends GameObject {
 	private void setImages() {
 		BufferedImage temp = null;
 		images = new ImageIcon[4];
-		System.out.println(this.number);
 		for (int i = 1; i <= 4; i++) {
 			try {
 				temp = ImageIO.read(Tank.class.getResourceAsStream("tank_" + number + "_direction_" + i + ".png"));
