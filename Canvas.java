@@ -30,7 +30,6 @@ public class Canvas extends JPanel {
 	private Player you;
 	Canvas(Player you) {
 		super();
-		Timer timer = new Timer(8, null);
 		game = Game.getGame();
 		this.you = you;
 		repaint();
@@ -47,7 +46,9 @@ public class Canvas extends JPanel {
 		for (GameObject obj : gameObjects) {
 			if (obj != null) {
 				obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
-				g.drawRect(obj.getX(), obj.getY(), obj.getImage().getIconWidth(), obj.getImage().getIconHeight());
+				Rectangle hitbox = obj.getHitBox();
+				g.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
+				//g.drawRect(obj.getX() + 5, obj.getY() + 5, 40, 40);
 			}
 		}
 		

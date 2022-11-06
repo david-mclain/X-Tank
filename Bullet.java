@@ -1,5 +1,6 @@
 package XTank;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -18,6 +19,10 @@ public class Bullet extends GameObject {
 
 	public String toString() {
 		return "{ bullet : " + "true; " + super.toString() + "}";
+	}
+	
+	public Rectangle getHitBox() {
+		return new Rectangle(getX(), getY(), 10, 10);
 	}
 
 	@Override

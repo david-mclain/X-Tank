@@ -1,5 +1,6 @@
 package XTank;
 
+import java.awt.Rectangle;
 import java.io.Serializable;
 
 import javax.swing.ImageIcon;
@@ -80,6 +81,8 @@ public abstract class GameObject implements Serializable {
 	public void setDir(int angle) {  this.dir = angle;  }
 	
 	public abstract ImageIcon getImage();
+	
+	public abstract Rectangle getHitBox();
 	
 	public String toString() {
 		String toRet = "";

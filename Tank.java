@@ -1,5 +1,6 @@
 package XTank;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -39,6 +40,10 @@ public class Tank extends GameObject {
 		if (i <= 4) {
 			setImageAndMove(i);
 		}
+	}
+	
+	public Rectangle getHitBox() {
+		return new Rectangle(getX() + 5, getY() + 5, 40, 40);
 	}
 	
 	private void setImages() {
