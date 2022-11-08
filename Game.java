@@ -39,8 +39,9 @@ public class Game {
 	public void refresh() {
 		gameObjects.clear();
 		for (Player p : players) {
-			if (p != null)
+			if (p != null) {
 				gameObjects.addAll(p.getObjects());
+			}
 		}
 		checkHitboxes();
 	}
@@ -51,7 +52,17 @@ public class Game {
 	
 	private void checkHitboxes() {
 		for (GameObject obj : gameObjects) {
-			
+			// If the type is a bullet, check if its hits a player
+			if (obj instanceof Bullet) {
+				Bullet bullet = (Bullet) obj;
+				for (Player p : players) {
+					// if bullet collides with hitbox
+					if (p != null && bullet.getHitBox().intersects(p.getTank().getHitBox())) {
+						System.out.println("DIE");
+						 p.removeBullet(bullet);
+					}
+				}
+			}
 		}
 	}
 	

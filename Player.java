@@ -22,12 +22,13 @@ public class Player {
 	private Scanner input;
 	private PrintWriter output;
 	private Tank tank;
-	private Bullet bullet;
+	private ArrayList<Bullet> bullets;
 	
 	private List<GameObject> playerObjects;
 	
 	public Player(int playerNumber) {
 		//super(playerNumber);
+		bullets = new ArrayList<Bullet>();
 		this.setPlayerNumber(playerNumber);
 		this.setHealth(DEFAULT_HEALTH);
 		playerObjects = new ArrayList<>();
@@ -60,9 +61,11 @@ public class Player {
 		if (x <= 4) {
 			tank.processMove(x);
 		}
-		else if (x == 10) {
-			playerObjects.remove(bullet);
-			bullet = new Bullet(tank.getX(), tank.getY(), tank.getDir());
+		// Checks if there are less than 3 bullets from this player currently
+		else if (x == 10 && bullets.size() < 3) {
+			//playerObjects.remove(bullet);
+			Bullet bullet = new Bullet(tank.getX(), tank.getY(), tank.getDir());
+			bullets.add(bullet);
 			playerObjects.add(bullet);
 			//game.addObject(bullet);
 		}
@@ -70,6 +73,15 @@ public class Player {
 	
 	public List<GameObject> getObjects() {
 		return playerObjects;
+	}
+	
+	public List<Bullet> getBullets(){
+		return bullets;
+	}
+	
+	public void removeBullet(Bullet bullet) {
+		playerObjects.remove(bullet);
+		bullets.remove(bullet);
 	}
 	
 	public ImageIcon getImage() {
@@ -81,8 +93,10 @@ public class Player {
 	}
 
 	public void update() {
-		if (bullet != null)
-			bullet.travel();		
+		for( Bullet bullet: bullets) {
+			if (bullet != null)
+				bullet.travel();
+		}		
 	}
 	
 }
