@@ -1,5 +1,6 @@
 package XTank;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,13 @@ public class Game {
 	private final int MAX_PLAYERS = 4;
 	private List<GameObject> gameObjects;
 	private static Game game;
+	private Rectangle barrier;
 	
 	private Game() {
 		curPlayers = 0;
 		gameObjects = new ArrayList<>();
 		players = new Player[4];
+		barrier = new Rectangle(300, 100, 100, 25);
 	}
 	
 	public static Game getGame() {
@@ -39,10 +42,17 @@ public class Game {
 			if (p != null)
 				gameObjects.addAll(p.getObjects());
 		}
+		checkHitboxes();
 	}
 	
 	public Player[] getPlayers() {
 		return players;
+	}
+	
+	private void checkHitboxes() {
+		for (GameObject obj : gameObjects) {
+			
+		}
 	}
 	
 	public List<GameObject> getGameObjects() {

@@ -48,6 +48,7 @@ public class Canvas extends JPanel {
 				obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
 				Rectangle hitbox = obj.getHitBox();
 				g.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
+				g.drawRect(300, 100, 100, 25);
 				//g.drawRect(obj.getX() + 5, obj.getY() + 5, 40, 40);
 			}
 		}
