@@ -60,6 +60,7 @@ public class Game {
 					if (p != null && bullet.getHitBox().intersects(p.getTank().getHitBox())) {
 						System.out.println("DIE");
 						 p.removeBullet(bullet);
+						 p.setHealth(p.getHealth() - 1);
 					}
 				}
 			}
