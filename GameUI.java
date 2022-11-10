@@ -25,6 +25,7 @@ public class GameUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				player.update();
+				game.refresh();
 				canvas.repaint();
 				
 			}

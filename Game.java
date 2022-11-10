@@ -10,13 +10,15 @@ public class Game {
 	private final int MAX_PLAYERS = 4;
 	private List<GameObject> gameObjects;
 	private static Game game;
-	private Rectangle barrier;
+	private Rectangle barrier, mapSize;
 	
 	private Game() {
 		curPlayers = 0;
 		gameObjects = new ArrayList<>();
 		players = new Player[4];
 		barrier = new Rectangle(300, 100, 100, 25);
+		// TODO Could add some different map sizes that the user selects
+		mapSize = new Rectangle(0, 0, 635, 580);
 	}
 	
 	public static Game getGame() {
@@ -55,8 +57,13 @@ public class Game {
 			// If the type is a bullet, check if its hits a player
 			if (obj instanceof Bullet) {
 				Bullet bullet = (Bullet) obj;
+				// Check if bullet hits any players
 				for (Player p : players) {
-					// if bullet collides with hitbox
+					// Check if bullet not in bounds
+					if (p != null && !bullet.getHitBox().intersects(mapSize)) {
+						p.removeBullet(bullet);
+					}
+					// Check if bullet intersects with player
 					if (p != null && bullet.getHitBox().intersects(p.getTank().getHitBox())) {
 						System.out.println("DIE");
 						 p.removeBullet(bullet);
