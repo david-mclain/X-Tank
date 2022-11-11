@@ -128,11 +128,10 @@ class Play implements Runnable {
 	@Override
 	public void run() {
 		try {
-			System.out.println("running");
 			player.setInput(new Scanner(socket.getInputStream()));
 			player.setOutput(new PrintWriter(socket.getOutputStream(), true));
 			player.getOutput().println("player " + player.getPlayerNumber());
-			//processCommands();
+			processCommands();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -141,19 +140,20 @@ class Play implements Runnable {
 	
 	//public synchronized void process()
 
-//	private void processCommands() {
-////		while (you.getInput().hasNextLine()) 
-////		{
-////			if (you == game.getPlayer1()) opponent = game.getPlayer2();
-////			else opponent = game.getPlayer1();
-////			
-////			var command = you.getInput().nextLine();
-////			if (command.startsWith("QUIT"))
-////				return;
-////			else if (command.startsWith("MOVE"))
-////				processMoveCommand(Integer.parseInt(command.substring(5)));
-////		}
-//	}
+	private void processCommands() {
+		while (player.getInput().hasNextLine()) {
+			var command = player.getInput().nextLine();
+			if (command.startsWith("QUIT"))
+				return;
+			else 
+				processInput(command);
+		}
+	}
+
+	private boolean processInput(String command) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 //	private void processMoveCommand(int location) 
 //	{

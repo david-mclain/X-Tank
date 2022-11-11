@@ -24,7 +24,7 @@ public class Tank extends GameObject {
 	}
 	
 	public void setImageAndMove(int i) {
-		curImage = images[i - 1];
+//		curImage = images[i - 1];
 		this.setX(this.getX() + moveX[i - 1]);
 		this.setY(this.getY() + moveY[i - 1]);
 	}

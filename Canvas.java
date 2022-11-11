@@ -3,13 +3,20 @@ package XTank;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
-//	private BufferedImage image;
-//	private ImageIcon icon;
-//	private Player you;
+	private ImageIcon[][] tankImages;
+	private BufferedImage image;
+	private ImageIcon icon;
+	private Player you;
 	Canvas(Player you) {
 		super();
 		//this.you = you;
@@ -58,6 +65,18 @@ public class Canvas extends JPanel {
 //		
 //		// draw Breakable bricks	
 //		br.draw(this, g);
+	}
+	
+	private void setTankImages() {
+		BufferedImage temp;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				try {
+					temp = ImageIO.read(Tank.class.getResourceAsStream("tank_" + i + "_direction_" + j + ".png"));
+					tankImages[i][j] = new ImageIcon(temp);
+				} catch (IOException e) {  System.out.println("Error loading tank images.");  }
+			}
+		}
 	}
 	
 }

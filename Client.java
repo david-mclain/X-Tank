@@ -29,7 +29,7 @@ public class Client {
 	private PrintWriter out;
 	private final int port = 58901;
 	
-	private static Player you;
+	private static Player player;
 	
 	public Client(String serverAddress) throws IllegalArgumentException {
 		try {
@@ -41,7 +41,7 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		frame = new GameUI(you);
+		frame = new GameUI(player);
 		frame.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
@@ -69,8 +69,8 @@ public class Client {
 	}
 	
 	private void process(int i) {
-		you.processInput(i);
-		you.getOutput().print(you.toString());
+		player.processInput(i);
+		player.getOutput().print(player.toString());
 	}
 
 	public void play() throws Exception {
@@ -78,13 +78,16 @@ public class Client {
 			String response = in.nextLine();
 			System.out.println(response);
 			int mark = Character.getNumericValue(response.charAt(7));
+			player = new Player(mark);
 			frame.setTitle("XTank: Player " + mark);
 			while (in.hasNextLine()) {
 				response = in.nextLine();
 				if (response.startsWith("bullet")) {
-					drawBullet();
+					drawBullet(response);
 				}
-				else if (response.startsWith("player"))
+				else if (response.startsWith("player")) {
+					drawPlayer(response);
+				}
 //				if (response.startsWith("VALID_MOVE")) {
 //					messageLabel.setText("Valid move, please wait");
 //					currentSquare.setText(mark);
@@ -118,17 +121,19 @@ public class Client {
 			}
 			out.println("QUIT");
 		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		} 
+		catch (Exception e) {} 
 		finally {
 			socket.close();
 			frame.dispose();
 		}
 	}
 	
-	private void drawBullet() {
-		
+	private void drawPlayer(String response) {
+		//TODO
+	}
+
+	private void drawBullet(String response) {
+		//TODO
 	}
 
 	public static void main(String[] args) {
