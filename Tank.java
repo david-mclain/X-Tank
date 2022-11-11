@@ -3,11 +3,9 @@ package XTank;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-@SuppressWarnings("serial")
 public class Tank extends GameObject {
 	
 	private int number;
@@ -21,8 +19,8 @@ public class Tank extends GameObject {
 	public Tank(int x) {
 		super(x);
 		this.number = x;
-		setImages();
-		curImage = images[getDir() - 1];
+//		setImages();
+//		curImage = images[getDir() - 1];
 	}
 	
 	public void setImageAndMove(int i) {

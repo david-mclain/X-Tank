@@ -1,16 +1,9 @@
 package XTank;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import javax.swing.Timer;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Player {
@@ -45,7 +38,7 @@ public class Player {
 	public void setHealth(int health) {  this.health = health;  }
 	
 	public String toString() {
-		return "{ playerNumber : " + playerNumber + "; " + super.toString() + "health : " + health + "; }";
+		return "playerNumber:" + playerNumber + "," + super.toString() + "health:" + health + "," + tank.toString();
 	}
 	
 	public void setInput(Scanner input) {  this.input = input;  }
@@ -93,7 +86,7 @@ public class Player {
 	}
 
 	public void update() {
-		for( Bullet bullet: bullets) {
+		for(Bullet bullet: bullets) {
 			if (bullet != null)
 				bullet.travel();
 		}		

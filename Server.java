@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -31,7 +32,13 @@ public class Server {
 	private static JButton start;
 	private static JButton startGame;
 	private static JLabel serverIP;
+	private static final int port = 58901;
 	public static void main(String[] args) throws Exception {
+		createServerUI();
+	}
+	
+	private static void createServerUI() throws UnknownHostException {
+		String ip = InetAddress.getLocalHost().toString().split("/")[1];
 		serverUI = new JFrame("XTank Server");
 		start = new JButton();
 		start.setFocusable(false);
@@ -47,8 +54,8 @@ public class Server {
 		startGame.setBounds(200, 25, 150, 30);
 		serverIP = new JLabel();
 		serverIP.setFont(new Font("Monospaced", Font.PLAIN, 16));
-		serverIP.setBounds(30, 75, 300, 50);
-		serverIP.setText("IP Address: " + InetAddress.getLocalHost());
+		serverIP.setBounds(40, 75, 300, 50);
+		serverIP.setText("IP Address: " + ip + ":" + port);
 		serverIP.setVisible(true);
 		serverUI.add(startGame);
 		serverUI.add(start);
@@ -58,9 +65,11 @@ public class Server {
 		serverUI.setSize(400, 400);
 		serverUI.setVisible(true);
 	}
+	
 	private static void startServer() {
-		System.out.println("start");
-		try (var listener = new ServerSocket(58901)) {
+		System.out.println("server running");
+		try (var listener = new ServerSocket(port)) {
+			System.out.println("in try");
 			listener.setSoTimeout(30000);
 			var pool = Executors.newFixedThreadPool(200);
 			game = Game.getGame();
@@ -99,15 +108,16 @@ class Player
 	 * and PrintWriter.
 	 */
 class Play implements Runnable {
-	private Player you;
+	private Player player;
 	private Game game;
 	private Socket socket;
 
 	public Play(Socket socket, Player player, Game game) {
 		this.socket = socket;
-		this.you = player;
+		this.player = player;
 		this.game = game;
-		game.addPlayer(you);
+		game.addPlayer(player);
+		System.out.println("new player");
 //		game.setCurrentPlayer(you);
 //		if (game.getPlayer1() == null)
 //			game.setPlayer1(you);
@@ -118,9 +128,10 @@ class Play implements Runnable {
 	@Override
 	public void run() {
 		try {
-			you.setInput(new Scanner(socket.getInputStream()));
-			you.setOutput(new PrintWriter(socket.getOutputStream(), true));
-			//you.getOutput().println("WELCOME " + you.getMark());
+			System.out.println("running");
+			player.setInput(new Scanner(socket.getInputStream()));
+			player.setOutput(new PrintWriter(socket.getOutputStream(), true));
+			player.getOutput().println("player " + player.getPlayerNumber());
 			//processCommands();
 		} 
 		catch (Exception e) {

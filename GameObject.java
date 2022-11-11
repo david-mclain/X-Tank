@@ -6,43 +6,32 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
-public abstract class GameObject implements Serializable {
+public abstract class GameObject {
 	private int x;
 	private int y;
 	private int dir;
 	
 	public GameObject(int playerNumber) throws IllegalArgumentException {
-		try {
-			int x, y, dir;
-			if (playerNumber == 1) {
-				x = 325;
-				y = 50;
-				dir = 3;
-			}
-			else if (playerNumber == 2) {
-				x = 550;
-				y = 250;
-				dir = 4;
-			}
-			else if (playerNumber == 3) {
-				x = 325;
-				y = 550;
-				dir = 1;
-			}
-			else if (playerNumber == 4) {
-				x = 50;
-				y = 300;
-				dir = 2;
-			}
-			else {
-				throw new IllegalArgumentException("Too many players");
-			}
-			setX(x);
-			setY(y);
-			setDir(dir);
+		int x, y, dir;
+		if (playerNumber == 1) {
+			x = 325;
+			y = 50;
+			dir = 3;
 		}
-		finally {
-			
+		else if (playerNumber == 2) {
+			x = 550;
+			y = 250;
+			dir = 4;
+		}
+		else if (playerNumber == 3) {
+			x = 325;
+			y = 550;
+			dir = 1;
+		}
+		else if (playerNumber == 4) {
+			x = 50;
+			y = 300;
+			dir = 2;
 		}
 	}
 	
@@ -86,7 +75,7 @@ public abstract class GameObject implements Serializable {
 	
 	public String toString() {
 		String toRet = "";
-		toRet += "dir :" + dir + "; x : " + x + "; y : " + y + "; ";
+		toRet += "dir:" + dir + ",x:" + x + ",y:" + y + ",";
 		return toRet;
 	}
 }

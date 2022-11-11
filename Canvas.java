@@ -1,37 +1,18 @@
 package XTank;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.List;
-import javax.swing.Timer;
-
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
-	private Game game;
-	private BufferedImage image;
-	private ImageIcon icon;
-	private Player you;
+//	private BufferedImage image;
+//	private ImageIcon icon;
+//	private Player you;
 	Canvas(Player you) {
 		super();
-		game = Game.getGame();
-		this.you = you;
+		//this.you = you;
 		repaint();
 	}
 	
@@ -42,40 +23,17 @@ public class Canvas extends JPanel {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(660, 0, 140, 600);
 		
-		List<GameObject> gameObjects = game.getGameObjects();
-		for (GameObject obj : gameObjects) {
-			if (obj != null) {
-				obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
-				Rectangle hitbox = obj.getHitBox();
-				g.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
-				g.drawRect(300, 100, 100, 25);
-				//g.drawRect(obj.getX() + 5, obj.getY() + 5, 40, 40);
-			}
-		}
-		
-//		for (int i = 1; i <= 4; i++) {
-//			if (i == 1) {
-//				you.getImage(3).paintIcon(this, g, 300, 25);
-//			}
-//			else if (i == 2) {
-//				you.getImage(4).paintIcon(this, g, 575, 250);
-//			}
-//			else if (i == 3) {
-//				you.getImage(1).paintIcon(this, g, 300, 525);
-//			}
-//			else {
-//				you.getImage(2).paintIcon(this, g, 25, 250);
+//		List<GameObject> gameObjects = game.getGameObjects();
+//		for (GameObject obj : gameObjects) {
+//			if (obj != null) {
+//				obj.getImage().paintIcon(this, g, obj.getX(), obj.getY());
+//				Rectangle hitbox = obj.getHitBox();
+//				g.drawRect((int)hitbox.getX(), (int)hitbox.getY(), (int)hitbox.getWidth(), (int)hitbox.getHeight());
+//				g.drawRect(300, 100, 100, 25);
+//				//g.drawRect(obj.getX() + 5, obj.getY() + 5, 40, 40);
 //			}
 //		}
 		
-//		getImage(1);
-//		icon.paintIcon(this, g, 50, 50);
-//		getImage(2);
-//		icon.paintIcon(this, g, 100, 50);
-//		getImage(3);
-//		icon.paintIcon(this, g, 150, 50);
-//		getImage(4);
-//		icon.paintIcon(this, g, 200, 50);
 		
 		g.setColor(Color.white);
 		g.setFont(new Font("Monospaced",Font.BOLD, 15));
@@ -100,15 +58,6 @@ public class Canvas extends JPanel {
 //		
 //		// draw Breakable bricks	
 //		br.draw(this, g);
-	}
-	
-	public void getImage(int x) {
-		try {
-			image = ImageIO.read(Canvas.class.getResourceAsStream("tank_" + x + "_direction_" + x + ".png"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		icon = new ImageIcon(image);
 	}
 	
 }
