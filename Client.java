@@ -32,6 +32,10 @@ public class Client {
 	private static Player player;
 	
 	public Client(String serverAddress) throws IllegalArgumentException {
+		connect(serverAddress);
+	}
+	
+	private void connect(String serverAddress) {
 		try {
 			socket = new Socket(serverAddress, port);
 			in = new Scanner(socket.getInputStream());
@@ -41,7 +45,11 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void createUI() {
 		frame = new GameUI(player);
+		frame.setTitle("XTank: Player " + player.getPlayerNumber());
 		frame.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
@@ -79,7 +87,7 @@ public class Client {
 			System.out.println(response);
 			int mark = Character.getNumericValue(response.charAt(7));
 			player = new Player(mark);
-			frame.setTitle("XTank: Player " + mark);
+			createUI();
 			while (in.hasNextLine()) {
 				response = in.nextLine();
 				if (response.startsWith("bullet")) {

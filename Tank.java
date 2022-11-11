@@ -7,18 +7,14 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Tank extends GameObject {
-	
-	private int number;
-	
+		
 	private ImageIcon[] images;
-	
 	private ImageIcon curImage;
 		
 	int[] moveX = {0, 10, 0, -10};
 	int[] moveY = {-10, 0, 10, 0};
 	public Tank(int x) {
 		super(x);
-		this.number = x;
 //		setImages();
 //		curImage = images[getDir() - 1];
 	}
@@ -42,19 +38,6 @@ public class Tank extends GameObject {
 	
 	public Rectangle getHitBox() {
 		return new Rectangle(getX() + 5, getY() + 5, 40, 40);
-	}
-	
-	private void setImages() {
-		BufferedImage temp = null;
-		images = new ImageIcon[4];
-		for (int i = 1; i <= 4; i++) {
-			try {
-				temp = ImageIO.read(Tank.class.getResourceAsStream("tank_" + number + "_direction_" + i + ".png"));
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			images[i - 1] = new ImageIcon(temp);
-		}
 	}
 
 	@Override

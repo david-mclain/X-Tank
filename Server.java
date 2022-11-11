@@ -1,13 +1,11 @@
 package XTank;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.net.InetAddress;
@@ -109,6 +107,7 @@ class Player
 	 */
 class Play implements Runnable {
 	private Player player;
+	@SuppressWarnings("unused")
 	private Game game;
 	private Socket socket;
 
@@ -142,7 +141,8 @@ class Play implements Runnable {
 
 	private void processCommands() {
 		while (player.getInput().hasNextLine()) {
-			var command = player.getInput().nextLine();
+			String command = player.getInput().nextLine();
+			System.out.println(command);
 			if (command.startsWith("QUIT"))
 				return;
 			else 
@@ -151,7 +151,6 @@ class Play implements Runnable {
 	}
 
 	private boolean processInput(String command) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

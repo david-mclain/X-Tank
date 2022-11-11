@@ -52,6 +52,10 @@ public class Game {
 		return players;
 	}
 	
+	public void updatePlayer() {
+		
+	}
+	
 	private void checkHitboxes() {
 		for (GameObject obj : gameObjects) {
 			// If the type is a bullet, check if its hits a player
