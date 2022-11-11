@@ -57,9 +57,9 @@ public class Player {
 		this.tank.setImageAndMove(i);
 	}
 	
-	public void processMove(int x) {
+	public void processInput(int x) {
 		if (x <= 4) {
-			tank.processMove(x);
+			tank.processInput(x);
 		}
 		// Checks if there are less than 3 bullets from this player currently
 		else if (x == 10 && bullets.size() < 3) {

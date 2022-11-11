@@ -1,5 +1,7 @@
 package XTank;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -7,6 +9,10 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
+import java.net.InetAddress;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * A server for a multi-player tic tac toe game. Loosely based on an example in
@@ -21,16 +27,53 @@ import java.util.concurrent.Executors;
  */
 public class Server {
 	private static Game game;
+	private static JFrame serverUI;
+	private static JButton start;
+	private static JButton startGame;
+	private static JLabel serverIP;
 	public static void main(String[] args) throws Exception {
+		serverUI = new JFrame("XTank Server");
+		start = new JButton();
+		start.setFocusable(false);
+		start.setText("Start Server");
+		start.setFont(new Font("Monospaced", Font.PLAIN, 15));
+		start.addActionListener(e -> startServer());
+		start.setBounds(25, 25, 150, 30);
+		startGame = new JButton();
+		startGame.setFocusable(false);
+		startGame.setText("Start Game");
+		startGame.setFont(new Font("Monospaced", Font.PLAIN, 15));
+		startGame.addActionListener(e -> startGame());
+		startGame.setBounds(200, 25, 150, 30);
+		serverIP = new JLabel();
+		serverIP.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		serverIP.setBounds(30, 75, 300, 50);
+		serverIP.setText("IP Address: " + InetAddress.getLocalHost());
+		serverIP.setVisible(true);
+		serverUI.add(startGame);
+		serverUI.add(start);
+		serverUI.add(serverIP);
+		serverUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		serverUI.setLayout(null);
+		serverUI.setSize(400, 400);
+		serverUI.setVisible(true);
+	}
+	private static void startServer() {
+		System.out.println("start");
 		try (var listener = new ServerSocket(58901)) {
-			System.out.println("X-Tank server is running...");
 			listener.setSoTimeout(30000);
 			var pool = Executors.newFixedThreadPool(200);
 			game = Game.getGame();
 			while (true) {
 				pool.execute(new Play(listener.accept(), new Player(game.getCurPlayer()), game));
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+	
+	private static void startGame() {
+
 	}
 }
 /*
@@ -78,26 +121,28 @@ class Play implements Runnable {
 			you.setInput(new Scanner(socket.getInputStream()));
 			you.setOutput(new PrintWriter(socket.getOutputStream(), true));
 			//you.getOutput().println("WELCOME " + you.getMark());
-			processCommands();
+			//processCommands();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 		} 
 	}
+	
+	//public synchronized void process()
 
-	private void processCommands() {
-//		while (you.getInput().hasNextLine()) 
-//		{
-//			if (you == game.getPlayer1()) opponent = game.getPlayer2();
-//			else opponent = game.getPlayer1();
-//			
-//			var command = you.getInput().nextLine();
-//			if (command.startsWith("QUIT"))
-//				return;
-//			else if (command.startsWith("MOVE"))
-//				processMoveCommand(Integer.parseInt(command.substring(5)));
-//		}
-	}
+//	private void processCommands() {
+////		while (you.getInput().hasNextLine()) 
+////		{
+////			if (you == game.getPlayer1()) opponent = game.getPlayer2();
+////			else opponent = game.getPlayer1();
+////			
+////			var command = you.getInput().nextLine();
+////			if (command.startsWith("QUIT"))
+////				return;
+////			else if (command.startsWith("MOVE"))
+////				processMoveCommand(Integer.parseInt(command.substring(5)));
+////		}
+//	}
 
 //	private void processMoveCommand(int location) 
 //	{
@@ -123,7 +168,7 @@ class Play implements Runnable {
 //		}
 //	}
 //
-//	public synchronized void move(int location, Player player) 
+//	public synchronized void move(Player player) 
 //	{
 //		if (player != game.getCurrentPlayer()) {
 //			throw new IllegalStateException("Not your turn");

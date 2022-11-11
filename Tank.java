@@ -35,7 +35,7 @@ public class Tank extends GameObject {
 		return images[x - 1];
 	}
 	
-	public void processMove(int i) {
+	public void processInput(int i) {
 		setDir(i);
 		if (i <= 4) {
 			setImageAndMove(i);

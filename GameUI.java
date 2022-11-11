@@ -63,7 +63,7 @@ public class GameUI extends JFrame {
 	}
 	
 	public void move(int x) {
-		player.processMove(x);
+		player.processInput(x);
 		game.refresh();
 		canvas.repaint();
 	}
