@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
 	private ImageIcon[][] tankImages;
+	private Graphics g;
 	private BufferedImage image;
 	private ImageIcon icon;
-	private Player you;
-	Canvas(Player you) {
+	Canvas() {
 		super();
 		//this.you = you;
 		repaint();
@@ -29,6 +29,7 @@ public class Canvas extends JPanel {
 		g.fillRect(0, 0, 650, 600);
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(660, 0, 140, 600);
+		setGraphics(g);
 		
 //		List<GameObject> gameObjects = game.getGameObjects();
 //		for (GameObject obj : gameObjects) {
@@ -65,6 +66,10 @@ public class Canvas extends JPanel {
 //		
 //		// draw Breakable bricks	
 //		br.draw(this, g);
+	}
+	
+	private void setGraphics(Graphics g) {
+		this.g = g;
 	}
 	
 	private void setTankImages() {

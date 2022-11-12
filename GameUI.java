@@ -13,11 +13,9 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class GameUI extends JFrame {
 	private JPanel canvas;
-	private Player player;
 	private Game game;
-	public GameUI(Player p) {
-		this.player = p;
-		canvas = new Canvas(player);
+	public GameUI() {
+		canvas = new Canvas();
 		game = Game.getGame();
 		this.setBounds(10, 10, 800, 630);
 		this.setBackground(Color.gray);
@@ -27,7 +25,6 @@ public class GameUI extends JFrame {
 	}
 	
 	public void move(int x) {
-		player.processInput(x);
 		game.refresh();
 		canvas.repaint();
 	}

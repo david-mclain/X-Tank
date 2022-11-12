@@ -10,8 +10,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.DataOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -25,12 +26,11 @@ import javax.swing.JPanel;
 public class Client {
 	private JFrame frame;
 	private Socket socket;
-	private Scanner in;
-	private PrintWriter out;
+	private DataInputStream in;
+	private DataOutputStream out;
+	private int playerNumber;
 	private final int port = 58901;
-	
-	private static Player player;
-	
+		
 	public Client(String serverAddress) throws IllegalArgumentException {
 		connect(serverAddress);
 	}
@@ -38,8 +38,9 @@ public class Client {
 	private void connect(String serverAddress) {
 		try {
 			socket = new Socket(serverAddress, port);
-			in = new Scanner(socket.getInputStream());
-			out = new PrintWriter(socket.getOutputStream(), true);
+			in = new DataInputStream(socket.getInputStream());
+//			in = new Scanner(socket.getInputStream());
+			out = new DataOutputStream(socket.getOutputStream());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -48,13 +49,21 @@ public class Client {
 	}
 	
 	private void createUI() {
-		frame = new GameUI(player);
-		frame.setTitle("XTank: Player " + player.getPlayerNumber());
+		frame = new GameUI();
+		frame.setTitle("XTank: Player " + playerNumber);
 		frame.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
 			@Override
 			public void keyPressed(KeyEvent e) {
+				//System.out.println("key pressed");
+				try {
+					out.writeUTF(playerNumber + "," + e.getKeyCode());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//out.print(playerNumber + "," + e.getKeyCode());
 				if (e.getKeyCode() == KeyEvent.VK_W) {
 					process(1);
 				}
@@ -77,20 +86,31 @@ public class Client {
 	}
 	
 	private void process(int i) {
-		player.processInput(i);
-		player.getOutput().print(player.toString());
+		//System.out.println("Processing: " + i);
+		try {
+			out.writeUTF("command:" + i + ",player:" + playerNumber);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//out.print("");
 	}
 
 	public void play() throws Exception {
 		try {
-			String response = in.nextLine();
+			String response = in.readUTF();
 			System.out.println(response);
 			int mark = Character.getNumericValue(response.charAt(7));
-			player = new Player(mark);
+			playerNumber = mark;
 			createUI();
-			while (in.hasNextLine()) {
-				response = in.nextLine();
-				if (response.startsWith("bullet")) {
+			System.out.println("created ui");
+			while (true) {
+				response = in.readUTF();
+				System.out.println(response);
+				if (response.startsWith("Game not")) {
+					JOptionPane.showMessageDialog(frame, "Game not yet started!");
+				}
+				else if (response.startsWith("bullet")) {
 					drawBullet(response);
 				}
 				else if (response.startsWith("player")) {
@@ -127,7 +147,7 @@ public class Client {
 					break;
 				}
 			}
-			out.println("QUIT");
+			out.writeUTF("QUIT");
 		} 
 		catch (Exception e) {} 
 		finally {

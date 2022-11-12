@@ -1,5 +1,7 @@
 package XTank;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +14,8 @@ public class Player {
 	
 	private int playerNumber;
 	private int health;
-	private Scanner input;
-	private PrintWriter output;
+	private DataInputStream input;
+	private DataOutputStream output;
 	private Tank tank;
 	private ArrayList<Bullet> bullets;
 	
@@ -41,10 +43,10 @@ public class Player {
 		return "playerNumber:" + playerNumber + "," + super.toString() + "health:" + health + "," + tank.toString();
 	}
 	
-	public void setInput(Scanner input) {  this.input = input;  }
-	public void setOutput(PrintWriter output) {  this.output = output;  }
-	public Scanner getInput() {  return input;  }
-	public PrintWriter getOutput() {  return output;  }
+	public void setInput(DataInputStream dataInputStream) {  this.input = dataInputStream;  }
+	public void setOutput(DataOutputStream dataOutputStream) {  this.output = dataOutputStream;  }
+	public DataInputStream getInput() {  return input;  }
+	public DataOutputStream getOutput() {  return output;  }
 
 	public void setImageAndMove(int i) {
 		this.tank.setImageAndMove(i);

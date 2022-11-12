@@ -1,12 +1,16 @@
 package XTank;
 
 import java.awt.Font;
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.net.InetAddress;
 import javax.swing.JButton;
@@ -31,32 +35,35 @@ public class Server {
 	private static JButton startGame;
 	private static JLabel serverIP;
 	private static final int port = 58901;
+	public static boolean gameStarted;
 	public static void main(String[] args) throws Exception {
 		createServerUI();
+		gameStarted = true;
+		startServer();
 	}
 	
 	private static void createServerUI() throws UnknownHostException {
 		String ip = InetAddress.getLocalHost().toString().split("/")[1];
 		serverUI = new JFrame("XTank Server");
-		start = new JButton();
-		start.setFocusable(false);
-		start.setText("Start Server");
-		start.setFont(new Font("Monospaced", Font.PLAIN, 15));
-		start.addActionListener(e -> startServer());
-		start.setBounds(25, 25, 150, 30);
-		startGame = new JButton();
-		startGame.setFocusable(false);
-		startGame.setText("Start Game");
-		startGame.setFont(new Font("Monospaced", Font.PLAIN, 15));
-		startGame.addActionListener(e -> startGame());
-		startGame.setBounds(200, 25, 150, 30);
+//		start = new JButton();
+//		start.setFocusable(false);
+//		start.setText("Start Server");
+//		start.setFont(new Font("Monospaced", Font.PLAIN, 15));
+//		start.addActionListener(e -> startServer());
+//		start.setBounds(25, 25, 150, 30);
+//		startGame = new JButton();
+//		startGame.setFocusable(false);
+//		startGame.setText("Start Game");
+//		startGame.setFont(new Font("Monospaced", Font.PLAIN, 15));
+//		startGame.addActionListener(e -> startGame());
+//		startGame.setBounds(200, 25, 150, 30);
 		serverIP = new JLabel();
 		serverIP.setFont(new Font("Monospaced", Font.PLAIN, 16));
 		serverIP.setBounds(40, 75, 300, 50);
 		serverIP.setText("IP Address: " + ip + ":" + port);
 		serverIP.setVisible(true);
-		serverUI.add(startGame);
-		serverUI.add(start);
+//		serverUI.add(startGame);
+//		serverUI.add(start);
 		serverUI.add(serverIP);
 		serverUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		serverUI.setLayout(null);
@@ -69,7 +76,7 @@ public class Server {
 		try (var listener = new ServerSocket(port)) {
 			System.out.println("in try");
 			listener.setSoTimeout(30000);
-			var pool = Executors.newFixedThreadPool(200);
+			var pool = Executors.newFixedThreadPool(4);
 			game = Game.getGame();
 			while (true) {
 				pool.execute(new Play(listener.accept(), new Player(game.getCurPlayer()), game));
@@ -80,34 +87,12 @@ public class Server {
 	}
 	
 	private static void startGame() {
-
+		gameStarted = true;
 	}
 }
-/*
 
-class Player
-{
-	private char mark;
-	Scanner input;
-	PrintWriter output;
-	
-	
-	public Player(char mark) {this.mark = mark;}
-	public char getMark() {return mark;}
-	public void setInput(Scanner input) { this.input = input;}
-	public void setOutput(PrintWriter output) {this.output = output;}
-	public Scanner getInput() {return input;}
-	public PrintWriter getOutput() {return output;}
-}
-
-	/**
-	 * A Player is identified by a character mark which is either 'X' or 'O'. For
-	 * communication with the client the player has a socket and associated Scanner
-	 * and PrintWriter.
-	 */
 class Play implements Runnable {
 	private Player player;
-	@SuppressWarnings("unused")
 	private Game game;
 	private Socket socket;
 
@@ -116,7 +101,7 @@ class Play implements Runnable {
 		this.player = player;
 		this.game = game;
 		game.addPlayer(player);
-		System.out.println("new player");
+		System.out.println("new player " + player.getPlayerNumber());
 //		game.setCurrentPlayer(you);
 //		if (game.getPlayer1() == null)
 //			game.setPlayer1(you);
@@ -127,9 +112,10 @@ class Play implements Runnable {
 	@Override
 	public void run() {
 		try {
-			player.setInput(new Scanner(socket.getInputStream()));
-			player.setOutput(new PrintWriter(socket.getOutputStream(), true));
-			player.getOutput().println("player " + player.getPlayerNumber());
+			player.setInput(new DataInputStream(socket.getInputStream()));
+			System.out.println(player.getInput() == null);
+			player.setOutput(new DataOutputStream(socket.getOutputStream()));
+			player.getOutput().writeUTF("player " + player.getPlayerNumber());
 			processCommands();
 		} 
 		catch (Exception e) {
@@ -140,17 +126,35 @@ class Play implements Runnable {
 	//public synchronized void process()
 
 	private void processCommands() {
-		while (player.getInput().hasNextLine()) {
-			String command = player.getInput().nextLine();
+		System.out.println("processing commands");
+		while (true) {
+			System.out.println("new inpt");
+			String command = "";
+			try {
+				command = player.getInput().readUTF();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println(command);
 			if (command.startsWith("QUIT"))
 				return;
-			else 
-				processInput(command);
+			else {
+				if (!Server.gameStarted)
+					try {
+						player.getOutput().writeUTF("Game not yet started");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				else
+					processInput(command);
+			}
 		}
 	}
 
 	private boolean processInput(String command) {
+		System.out.println("processing command");
 		return false;
 	}
 

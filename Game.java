@@ -52,6 +52,10 @@ public class Game {
 		return players;
 	}
 	
+	public Player getPlayer(int i) {
+		return players[i - 1];
+	}
+	
 	public void updatePlayer() {
 		
 	}
