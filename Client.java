@@ -149,8 +149,11 @@ public class Client {
 	}
 	
 	private void drawStuff(String response) {
-		((GameUI) frame).drawStuff(response, playerNumber);
-		
+		//System.out.println(response);
+		String[] a = response.split("\\+");
+		for (String s : a)
+			((GameUI) frame).drawStuff(s.substring(1), Character.getNumericValue(s.charAt(0)));
+		//((GameUI) frame).drawStuff(response, playerNumber);
 	}
 
 	public static void main(String[] args) {

@@ -99,6 +99,8 @@ public class Canvas extends JPanel {
 	}
 	
 	public void drawStuff(String response, int num) {
+		System.out.println("drawing " + num);
+		System.out.println(response);
 		tankInfo = new int[5];
 		bullets = new int[3][3];
 		String[] playerInfo = response.split(";");

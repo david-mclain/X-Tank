@@ -40,7 +40,7 @@ public class Player {
 	public void setHealth(int health) {  this.health = health;  }
 	
 	public String toString() {
-		String ret = health + "," + tank.toString();
+		String ret = playerNumber + "" + health + "," + tank.toString();
 		for (Bullet b : bullets) {
 			if (b != null)
 				ret += ";" + b.toString();
