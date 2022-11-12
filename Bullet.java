@@ -10,8 +10,8 @@ import javax.swing.ImageIcon;
 public class Bullet extends GameObject {	
 	private static ImageIcon bulletIcon;
 	private static BufferedImage image;
-	int[] moveX = {0, 1, 0, -1};
-	int[] moveY = {-1, 0, 1, 0};
+	int[] moveX = {0, 3, 0, -3};
+	int[] moveY = {-3, 0, 3, 0};
 	public Bullet(int x, int y, int dir) {
 		super(x, y, dir);
 		setImage();

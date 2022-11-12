@@ -28,14 +28,6 @@ public class GameUI extends JFrame {
 		game.refresh();
 		canvas.repaint();
 	}
-	
-	public void drawTank(int x, int y, int dir, int num) {
-		((Canvas) canvas).drawTank(x, y, dir, num);
-	}
-	
-	public void drawBullet(int x, int y) {
-		((Canvas) canvas).drawBullet(x, y);
-	}
 
 	public void drawStuff(String response, int playerNumber) {
 		((Canvas) canvas).drawStuff(response, playerNumber);

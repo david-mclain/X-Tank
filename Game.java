@@ -30,7 +30,6 @@ public class Game {
 	public int getCurPlayer() {  return curPlayers + 1;  }
 	
 	public void addPlayer(Player player) {
-		System.out.println("new player fdafsa");
 		players[curPlayers++] = player;
 	}
 	
@@ -74,8 +73,8 @@ public class Game {
 					// Check if bullet intersects with player
 					if (p != null && bullet.getHitBox().intersects(p.getTank().getHitBox())) {
 						System.out.println("DIE");
-						 p.removeBullet(bullet);
-						 p.setHealth(p.getHealth() - 1);
+						p.removeBullet(bullet);
+						p.setHealth(p.getHealth() - 1);
 					}
 				}
 			}

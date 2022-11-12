@@ -152,14 +152,21 @@ class Play implements Runnable {
 	}
 
 	protected void refreshAndSend() {
+		player.update();
 		game.refresh();
 		DataOutputStream out = player.getOutput();
+//		Player[] players = game.getPlayers();
+//		String s = players[0].toString();
+//		for (int i = 1; i < players.length; i++) {
+//			Player p = players[i];
+//			if (p != null) {
+//				s += "+" + p.toString();
+//			}
+//		}
+//		System.out.println(s);
 		try {
 			out.writeUTF(player.toString());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		} catch (IOException e) {}
 	}
 	
 //	private void processMoveCommand(int location) 

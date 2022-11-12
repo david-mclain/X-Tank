@@ -116,16 +116,6 @@ public class Canvas extends JPanel {
 		}
 		repaint();
 	}
-	
-	public void drawTank(int x, int y, int dir, int num) {
-		tankInfo = new int[5];
-		tankInfo[0] = x;
-		tankInfo[1] = y;
-		tankInfo[2] = dir;
-		tankInfo[3] = num;
-		tankInfo[4] = 1;
-		repaint();
-	}
 
 	public void drawBullet(int x, int y) {
 		bullet.paintIcon(this, g, x, y);

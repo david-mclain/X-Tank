@@ -86,9 +86,11 @@ public class Client {
 	public void play() throws Exception {
 		try {
 			String response = in.readUTF();
+			System.out.println(response);
 			int mark = Character.getNumericValue(response.charAt(7));
 			playerNumber = mark;
 			createUI();
+			System.out.println("created ui");
 			while (true) {
 				response = in.readUTF();
 //				System.out.println(response);
@@ -148,6 +150,7 @@ public class Client {
 	
 	private void drawStuff(String response) {
 		((GameUI) frame).drawStuff(response, playerNumber);
+		
 	}
 
 	public static void main(String[] args) {
