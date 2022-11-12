@@ -69,7 +69,7 @@ public class Client {
 					process(4);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-					process(10);
+					process(5);
 				}
 			}
 			@Override
@@ -86,23 +86,24 @@ public class Client {
 	public void play() throws Exception {
 		try {
 			String response = in.readUTF();
-			System.out.println(response);
 			int mark = Character.getNumericValue(response.charAt(7));
 			playerNumber = mark;
 			createUI();
-			System.out.println("created ui");
 			while (true) {
 				response = in.readUTF();
 //				System.out.println(response);
 				if (response.startsWith("Game not")) {
 					JOptionPane.showMessageDialog(frame, "Game not yet started!");
 				}
-				else if (response.startsWith("bullet")) {
-					drawBullet(response);
+				else {
+					drawStuff(response);
 				}
-				else if (response.startsWith("tank")) {
-					drawTank(response);
-				}
+//				else if (response.startsWith("bullet")) {
+//					drawBullet(response);
+//				}
+//				else if (response.startsWith("tank")) {
+//					drawTank(response);
+//				}
 //				if (response.startsWith("VALID_MOVE")) {
 //					messageLabel.setText("Valid move, please wait");
 //					currentSquare.setText(mark);
@@ -145,25 +146,8 @@ public class Client {
 		}
 	}
 	
-	private void drawTank(String response) {
-		String[] temp = response.split(",");
-		String[][] res = new String[temp.length][2];
-		int i = 0;
-		for (String s : temp) {
-			String[] x = s.split(":");
-			res[i][0] = x[0];
-			res[i][1] = x[1];
-			i++;
-		}
-////		// x, y, dir, num
-//		System.out.println(res[1][0] + "," + res[1][1]);
-//		System.out.println(res[2][0] + "," + res[2][1]);
-//		System.out.println(res[3][0] + "," + res[3][1]);
-		((GameUI) frame).drawTank(Integer.parseInt(res[2][1]), Integer.parseInt(res[3][1]), Integer.parseInt(res[1][1]), playerNumber);
-	}
-
-	private void drawBullet(String response) {
-
+	private void drawStuff(String response) {
+		((GameUI) frame).drawStuff(response, playerNumber);
 	}
 
 	public static void main(String[] args) {

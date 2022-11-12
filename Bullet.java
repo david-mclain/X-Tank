@@ -18,7 +18,7 @@ public class Bullet extends GameObject {
 	}
 
 	public String toString() {
-		return "bullet:true," + super.toString();
+		return super.toString();
 	}
 	
 	public Rectangle getHitBox() {

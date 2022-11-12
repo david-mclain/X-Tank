@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -15,15 +17,14 @@ import javax.swing.JPanel;
 public class Canvas extends JPanel {
 	private ImageIcon[][] tankImages;
 	private Graphics g;
-	private BufferedImage image;
 	private int[] tankInfo;
 	private ImageIcon bullet;
+	private int[][] bullets;
 	Canvas() {
 		super();
-		tankInfo = new int[4];
-		repaint();
 		//this.you = you;
 		setTankImages();
+		setBulletImage();
 	}
 	
 	public void paint(Graphics g) {
@@ -45,19 +46,17 @@ public class Canvas extends JPanel {
 //			}
 //		}
 		
-		tankImages[tankInfo[3] - 1][tankInfo[2] - 1].paintIcon(this, g, tankInfo[0], tankInfo[1]);
-		
+		if (tankInfo[0] != 0)
+			tankImages[tankInfo[4] - 1][tankInfo[3] - 1].paintIcon(this, g, tankInfo[1], tankInfo[2]);
+		for (int[] arr : bullets) {
+			if (arr[0] != 0)
+				bullet.paintIcon(this, g, arr[1], arr[2]);
+		}
 		
 		g.setColor(Color.white);
 		g.setFont(new Font("Monospaced",Font.BOLD, 15));
 		g.drawString("Scores", 700,30);
-//		Player[] players = game.getPlayers();
-//		for (int i = 0; i < players.length; i++) {
-//			Player player = players[i];
-//			if (player != null) {
-//				g.drawString("Player " + player.getPlayerNumber() + ":  0", 670, 60 + i * 30);
-//			}
-//		}
+
 //		g.drawString("Player 1:  0", 670,60);
 //		g.drawString("Player 2:  0", 670,90);
 		
@@ -90,11 +89,41 @@ public class Canvas extends JPanel {
 		}
 	}
 	
+	private void setBulletImage() {
+		BufferedImage temp = null;
+		try {
+			temp = ImageIO.read(Tank.class.getResourceAsStream("bullet.png"));
+		}
+		catch (IOException e) {  System.out.println("Error loading tank images.");  }
+		bullet = new ImageIcon(temp);
+	}
+	
+	public void drawStuff(String response, int num) {
+		tankInfo = new int[5];
+		bullets = new int[3][3];
+		String[] playerInfo = response.split(";");
+		String[] tank = playerInfo[0].split(",");
+		tankInfo[0] = Integer.parseInt(tank[0]); // tank info health
+		tankInfo[1] = Integer.parseInt(tank[1]); // tank info x
+		tankInfo[2] = Integer.parseInt(tank[2]); // tank info y
+		tankInfo[3] = Integer.parseInt(tank[3]); // tank info dir
+		tankInfo[4] = num; // tank info num
+		for (int i = 1; i < playerInfo.length; i++) {
+			String[] temp = playerInfo[i].split(",");
+			bullets[i - 1][0] = 1;
+			bullets[i - 1][1] = Integer.parseInt(temp[0]);
+			bullets[i - 1][2] = Integer.parseInt(temp[1]);
+		}
+		repaint();
+	}
+	
 	public void drawTank(int x, int y, int dir, int num) {
+		tankInfo = new int[5];
 		tankInfo[0] = x;
 		tankInfo[1] = y;
 		tankInfo[2] = dir;
 		tankInfo[3] = num;
+		tankInfo[4] = 1;
 		repaint();
 	}
 

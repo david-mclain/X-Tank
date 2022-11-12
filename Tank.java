@@ -15,14 +15,9 @@ public class Tank extends GameObject {
 	int[] moveY = {-10, 0, 10, 0};
 	public Tank(int x) {
 		super(x);
-		System.out.println("tank created");
-		System.out.println(getX() + " " + getY() + " " + getDir());
-//		setImages();
-//		curImage = images[getDir() - 1];
 	}
 	
-	public void setImageAndMove(int i) {
-//		curImage = images[i - 1];
+	public void move(int i) {
 		this.setX(this.getX() + moveX[i - 1]);
 		this.setY(this.getY() + moveY[i - 1]);
 	}
@@ -34,12 +29,12 @@ public class Tank extends GameObject {
 	public void processInput(int i) {
 		setDir(i);
 		if (i <= 4) {
-			setImageAndMove(i);
+			move(i);
 		}
 	}
 	
 	public String toString() {
-		return "tank:true," + super.toString();
+		return super.toString();
 	}
 	
 	public Rectangle getHitBox() {

@@ -36,4 +36,8 @@ public class GameUI extends JFrame {
 	public void drawBullet(int x, int y) {
 		((Canvas) canvas).drawBullet(x, y);
 	}
+
+	public void drawStuff(String response, int playerNumber) {
+		((Canvas) canvas).drawStuff(response, playerNumber);
+	}
 }

@@ -148,17 +148,17 @@ class Play implements Runnable {
 	}
 
 	private void processInput(String command) {
-		System.out.println(command);
 		player.processInput(Character.getNumericValue(command.charAt(8)));
 	}
 
 	protected void refreshAndSend() {
+		game.refresh();
 		DataOutputStream out = player.getOutput();
 		try {
-			out.writeUTF(player.getTank().toString());
-		} catch (IOException e) {
+			out.writeUTF(player.toString());
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 	}
 	

@@ -77,8 +77,7 @@ public abstract class GameObject {
 	public abstract Rectangle getHitBox();
 	
 	public String toString() {
-		String toRet = "";
-		toRet += "dir:" + dir + ",x:" + x + ",y:" + y;
+		String toRet = x + "," + y + "," + dir;
 		return toRet;
 	}
 }

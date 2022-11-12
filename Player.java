@@ -28,7 +28,6 @@ public class Player {
 		this.setHealth(DEFAULT_HEALTH);
 		playerObjects = new ArrayList<>();
 		tank = new Tank(playerNumber);
-		System.out.println(tank);
 		playerObjects.add(tank);
 	}
 
@@ -41,7 +40,12 @@ public class Player {
 	public void setHealth(int health) {  this.health = health;  }
 	
 	public String toString() {
-		return "health:" + health;
+		String ret = health + "," + tank.toString();
+		for (Bullet b : bullets) {
+			if (b != null)
+				ret += ";" + b.toString();
+		}
+		return ret;
 	}
 	
 	public void setInput(DataInputStream dataInputStream) {  this.input = dataInputStream;  }
@@ -49,8 +53,8 @@ public class Player {
 	public DataInputStream getInput() {  return input;  }
 	public DataOutputStream getOutput() {  return output;  }
 
-	public void setImageAndMove(int i) {
-		this.tank.setImageAndMove(i);
+	public void move(int i) {
+		this.tank.move(i);
 	}
 	
 	public void processInput(int x) {
@@ -58,7 +62,7 @@ public class Player {
 			tank.processInput(x);
 		}
 		// Checks if there are less than 3 bullets from this player currently
-		else if (x == 10 && bullets.size() < 3) {
+		else if (x == 5 && bullets.size() < 3) {
 			//playerObjects.remove(bullet);
 			Bullet bullet = new Bullet(tank.getX(), tank.getY(), tank.getDir());
 			bullets.add(bullet);
