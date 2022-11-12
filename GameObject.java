@@ -25,12 +25,12 @@ public abstract class GameObject {
 		}
 		else if (playerNumber == 3) {
 			x = 325;
-			y = 550;
+			y = 500;
 			dir = 1;
 		}
 		else if (playerNumber == 4) {
 			x = 50;
-			y = 300;
+			y = 250;
 			dir = 2;
 		}
 		setX(x);

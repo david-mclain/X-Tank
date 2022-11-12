@@ -10,12 +10,21 @@ public class Game {
 	private final int MAX_PLAYERS = 4;
 	private List<GameObject> gameObjects;
 	private static Game game;
+	List<Rectangle> obstacles; 
 	private Rectangle barrier, mapSize;
+	
+	int[] moveX = {0, 10, 0, -10};
+	int[] moveY = {-10, 0, 10, 0};
 	
 	private Game() {
 		curPlayers = 0;
 		gameObjects = new ArrayList<>();
 		players = new Player[4];
+		obstacles = new ArrayList<>();
+		obstacles.add(new Rectangle(0, 0, 635, 10));
+		obstacles.add(new Rectangle(0, 0, 10, 580));
+		obstacles.add(new Rectangle(0, 570, 635, 10));
+		obstacles.add(new Rectangle(625, 0, 10, 580));
 		barrier = new Rectangle(300, 100, 100, 25);
 		mapSize = new Rectangle(0, 0, 635, 580);
 	}
@@ -106,5 +115,14 @@ public class Game {
 
 	public boolean playersFull() {
 		return this.curPlayers == MAX_PLAYERS;
+	}
+
+	public boolean moveInRange(int x, Rectangle hitbox) {
+		Rectangle r = new Rectangle((int)hitbox.getX() + moveX[x - 1], (int)hitbox.getY() + moveY[x - 1], (int)hitbox.getWidth(), (int)hitbox.getHeight());
+		for (Rectangle a : obstacles) {
+			if (r.intersects(a))
+				return false;
+		}
+		return true;
 	}
 }

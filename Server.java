@@ -148,7 +148,9 @@ class Play implements Runnable {
 	}
 
 	private void processInput(String command) {
-		player.processInput(Character.getNumericValue(command.charAt(8)));
+		int x = Character.getNumericValue(command.charAt(8));
+		if (x == 5 || (x <= 4 && game.moveInRange(x, player.getTank().getHitBox())))
+			player.processInput(x);
 	}
 
 	protected void refreshAndSend() {

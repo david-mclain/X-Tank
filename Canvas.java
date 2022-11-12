@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
 	private ImageIcon[][] tankImages;
-	private Graphics g;
 	private int[] tankInfo;
 	private ImageIcon bullet;
 	private int[][] bullets;
+	private boolean repainting;
 	Canvas() {
 		super();
 		//this.you = you;
@@ -28,13 +28,14 @@ public class Canvas extends JPanel {
 	}
 	
 	public void paint(Graphics g) {
-		setGraphics(g);
-		g.clearRect(0, 0, 800, 630);
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 650, 600);
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(660, 0, 140, 600);
-				
+		if (repainting) {
+			g.clearRect(0, 0, 800, 630);
+			g.setColor(Color.black);
+			g.fillRect(0, 0, 650, 600);
+			g.setColor(Color.DARK_GRAY);
+			g.fillRect(660, 0, 140, 600);
+			repainting = false;
+		}
 //		List<GameObject> gameObjects = game.getGameObjects();
 //		for (GameObject obj : gameObjects) {
 //			if (obj != null) {
@@ -71,11 +72,7 @@ public class Canvas extends JPanel {
 //		// draw Breakable bricks	
 //		br.draw(this, g);
 	}
-	
-	private void setGraphics(Graphics g) {
-		this.g = g;
-	}
-	
+
 	private void setTankImages() {
 		tankImages = new ImageIcon[4][4];
 		BufferedImage temp;
@@ -99,8 +96,9 @@ public class Canvas extends JPanel {
 	}
 	
 	public void drawStuff(String response, int num) {
-		System.out.println("drawing " + num);
-		System.out.println(response);
+//		System.out.println("drawing " + num);
+//		System.out.println(response);
+		repainting = true;
 		tankInfo = new int[5];
 		bullets = new int[3][3];
 		String[] playerInfo = response.split(";");
@@ -110,6 +108,7 @@ public class Canvas extends JPanel {
 		tankInfo[2] = Integer.parseInt(tank[2]); // tank info y
 		tankInfo[3] = Integer.parseInt(tank[3]); // tank info dir
 		tankInfo[4] = num; // tank info num
+//		System.out.println("health: " + tankInfo[0] + "; x: " + tankInfo[1] + "; y: " + tankInfo[2] + "; dir: " + tankInfo[3] + "; number: " + tankInfo[4]);
 		for (int i = 1; i < playerInfo.length; i++) {
 			String[] temp = playerInfo[i].split(",");
 			bullets[i - 1][0] = 1;
@@ -119,8 +118,11 @@ public class Canvas extends JPanel {
 		repaint();
 	}
 
-	public void drawBullet(int x, int y) {
-		bullet.paintIcon(this, g, x, y);
+	public void drawStuff(String response) {
+		String[] a = response.split("\\+");
+		for (String s : a) {
+			drawStuff(s.substring(1), Character.getNumericValue(s.charAt(0)));
+		}
 	}
 	
 }
