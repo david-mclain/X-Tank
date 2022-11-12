@@ -3,6 +3,7 @@ package XTank;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,9 +21,12 @@ public class Canvas extends JPanel {
 	private ImageIcon bullet;
 	private int[][] bullets;
 	private boolean repainting;
+	List<Rectangle> obstacles = MapCreator.get();
 	Canvas() {
 		super();
 		//this.you = you;
+//		obstacles = new ArrayList<>();
+//		obstacles.addAll(MapCreator.get());
 		setTankImages();
 		setBulletImage();
 	}
@@ -34,6 +38,10 @@ public class Canvas extends JPanel {
 			g.fillRect(0, 0, 650, 600);
 			g.setColor(Color.DARK_GRAY);
 			g.fillRect(660, 0, 140, 600);
+			g.drawRect(150, 200, 350, 20);
+			g.drawRect(150, 400, 350, 20);
+//			for (Rectangle r : obstacles)
+//				g.drawRect((int)r.getX(), (int)r.getY(), (int)r.getWidth(), (int)r.getHeight());
 			repainting = false;
 		}
 //		List<GameObject> gameObjects = game.getGameObjects();
@@ -46,7 +54,7 @@ public class Canvas extends JPanel {
 //				//g.drawRect(obj.getX() + 5, obj.getY() + 5, 40, 40);
 //			}
 //		}
-		
+		g.drawRect(150, 200, 350, 20);
 		if (tankInfo[0] != 0)
 			tankImages[tankInfo[4] - 1][tankInfo[3] - 1].paintIcon(this, g, tankInfo[1], tankInfo[2]);
 		for (int[] arr : bullets) {
@@ -124,5 +132,4 @@ public class Canvas extends JPanel {
 			drawStuff(s.substring(1), Character.getNumericValue(s.charAt(0)));
 		}
 	}
-	
 }

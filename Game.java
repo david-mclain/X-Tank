@@ -21,10 +21,12 @@ public class Game {
 		gameObjects = new ArrayList<>();
 		players = new Player[4];
 		obstacles = new ArrayList<>();
-		obstacles.add(new Rectangle(0, 0, 635, 10));
-		obstacles.add(new Rectangle(0, 0, 10, 580));
-		obstacles.add(new Rectangle(0, 570, 635, 10));
-		obstacles.add(new Rectangle(625, 0, 10, 580));
+		obstacles.add(new Rectangle(0, 0, 650, 5));
+		obstacles.add(new Rectangle(0, 0, 5, 600));
+		obstacles.add(new Rectangle(0, 590, 650, 5));
+		obstacles.add(new Rectangle(650, 0, 5, 580));
+		obstacles.add(new Rectangle(150, 200, 350, 20));
+		obstacles.add(new Rectangle(150, 400, 350, 20));
 		barrier = new Rectangle(300, 100, 100, 25);
 		mapSize = new Rectangle(0, 0, 635, 580);
 	}
@@ -34,6 +36,15 @@ public class Game {
 			game = new Game();
 		}
 		return game;
+	}
+	
+	public String getBounds() {
+		String ret = "";
+		for (Rectangle r : obstacles) {
+			ret = ret + (int)r.getX() + "," + (int)r.getY() + "," + (int)r.getWidth() + "," + r.getHeight() + ";";
+		}
+		//for ();
+		return ret;
 	}
 	
 	public int getCurPlayer() {  return curPlayers + 1;  }
@@ -69,16 +80,23 @@ public class Game {
 	}
 	
 	private void checkHitboxes() {
+		boolean ex = false;
 		for (GameObject obj : gameObjects) {
 			// If the type is a bullet, check if its hits a player
 			if (obj instanceof Bullet) {
 				Bullet bullet = (Bullet) obj;
+				for (Rectangle r : obstacles) {
+					if (bullet.getHitBox().intersects(r)) {
+						System.out.println("inter");
+						obj = null;
+						ex = true;
+						break;
+					}
+				}
+				if (ex)
+					continue;
 				// Check if bullet hits any players
 				for (Player p : players) {
-					// Check if bullet not in bounds
-					if (p != null && !bullet.getHitBox().intersects(mapSize)) {
-						p.removeBullet(bullet);
-					}
 					// Check if bullet intersects with player
 					if (p != null && bullet.getHitBox().intersects(p.getTank().getHitBox())) {
 						System.out.println("DIE");

@@ -39,7 +39,6 @@ public class Client {
 		try {
 			socket = new Socket(serverAddress, port);
 			in = new DataInputStream(socket.getInputStream());
-//			in = new Scanner(socket.getInputStream());
 			out = new DataOutputStream(socket.getOutputStream());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -86,11 +85,9 @@ public class Client {
 	public void play() throws Exception {
 		try {
 			String response = in.readUTF();
-			System.out.println(response);
 			int mark = Character.getNumericValue(response.charAt(7));
 			playerNumber = mark;
 			createUI();
-			System.out.println("created ui");
 			while (true) {
 				response = in.readUTF();
 //				System.out.println(response);

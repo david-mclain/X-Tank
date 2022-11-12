@@ -20,17 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-/**
- * A server for a multi-player tic tac toe game. Loosely based on an example in
- * Deitel and Deitel’s “Java How to Program” book. For this project I created a
- * new application-level protocol called TTTP (for Tic Tac Toe Protocol), which
- * is entirely plain text. The messages of TTTP are:
- *
- * Client -> Server MOVE <n> QUIT
- *
- * Server -> Client WELCOME <char> VALID_MOVE OTHER_PLAYER_MOVED <n>
- * OTHER_PLAYER_LEFT VICTORY DEFEAT TIE MESSAGE <text>
- */
 public class Server {
 	private static Game game;
 	private static JFrame serverUI;
@@ -40,6 +29,7 @@ public class Server {
 	private static final int port = 58901;
 	public static boolean gameStarted;
 	public static void main(String[] args) throws Exception {
+		MapCreator.create();
 		createServerUI();
 		gameStarted = true;
 		startServer();
@@ -127,8 +117,6 @@ class Play implements Runnable {
 			e.printStackTrace();
 		} 
 	}
-	
-	//public synchronized void process()
 
 	private void processCommands() {
 		while (true) {
