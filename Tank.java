@@ -16,6 +16,7 @@ public class Tank extends GameObject {
 	public Tank(int x) {
 		super(x);
 		System.out.println("tank created");
+		System.out.println(getX() + " " + getY() + " " + getDir());
 //		setImages();
 //		curImage = images[getDir() - 1];
 	}

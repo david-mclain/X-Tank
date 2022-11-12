@@ -146,21 +146,24 @@ public class Client {
 	}
 	
 	private void drawTank(String response) {
-		System.out.println(response);
-//		String[] temp = response.split(",");
-//		String[][] res = new String[temp.length][2];
-//		int i = 0;
-//		for (String s : temp) {
-//			String[] x = s.split(":");
-//			res[i][0] = x[0];
-//			res[i][1] = x[1];
-//		}
+		String[] temp = response.split(",");
+		String[][] res = new String[temp.length][2];
+		int i = 0;
+		for (String s : temp) {
+			String[] x = s.split(":");
+			res[i][0] = x[0];
+			res[i][1] = x[1];
+			i++;
+		}
 ////		// x, y, dir, num
-//		((GameUI) frame).drawTank(Integer.parseInt(res[2][1]), Integer.parseInt(res[3][1]), Integer.parseInt(res[1][1]), playerNumber);
+//		System.out.println(res[1][0] + "," + res[1][1]);
+//		System.out.println(res[2][0] + "," + res[2][1]);
+//		System.out.println(res[3][0] + "," + res[3][1]);
+		((GameUI) frame).drawTank(Integer.parseInt(res[2][1]), Integer.parseInt(res[3][1]), Integer.parseInt(res[1][1]), playerNumber);
 	}
 
 	private void drawBullet(String response) {
-		//TODO
+
 	}
 
 	public static void main(String[] args) {

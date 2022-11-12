@@ -12,7 +12,7 @@ public abstract class GameObject {
 	private int dir;
 	
 	public GameObject(int playerNumber) throws IllegalArgumentException {
-		int x, y, dir;
+		int x = 0, y = 0, dir = 0;
 		if (playerNumber == 1) {
 			x = 325;
 			y = 50;
@@ -33,6 +33,9 @@ public abstract class GameObject {
 			y = 300;
 			dir = 2;
 		}
+		setX(x);
+		setY(y);
+		setDir(dir);
 	}
 	
 	public GameObject(int x, int y, int dir) {

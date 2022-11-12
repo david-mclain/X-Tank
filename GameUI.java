@@ -30,8 +30,6 @@ public class GameUI extends JFrame {
 	}
 	
 	public void drawTank(int x, int y, int dir, int num) {
-		if (dir < 0)
-			return;
 		((Canvas) canvas).drawTank(x, y, dir, num);
 	}
 	

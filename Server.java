@@ -148,7 +148,7 @@ class Play implements Runnable {
 	}
 
 	private void processInput(String command) {
-		//System.out.println(command);
+		System.out.println(command);
 		player.processInput(Character.getNumericValue(command.charAt(8)));
 	}
 

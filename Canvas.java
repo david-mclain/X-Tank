@@ -16,21 +16,24 @@ public class Canvas extends JPanel {
 	private ImageIcon[][] tankImages;
 	private Graphics g;
 	private BufferedImage image;
+	private int[] tankInfo;
 	private ImageIcon bullet;
 	Canvas() {
 		super();
-		//this.you = you;
+		tankInfo = new int[4];
 		repaint();
+		//this.you = you;
+		setTankImages();
 	}
 	
 	public void paint(Graphics g) {
+		setGraphics(g);
 		g.clearRect(0, 0, 800, 630);
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 650, 600);
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(660, 0, 140, 600);
-		setGraphics(g);
-		
+				
 //		List<GameObject> gameObjects = game.getGameObjects();
 //		for (GameObject obj : gameObjects) {
 //			if (obj != null) {
@@ -41,6 +44,8 @@ public class Canvas extends JPanel {
 //				//g.drawRect(obj.getX() + 5, obj.getY() + 5, 40, 40);
 //			}
 //		}
+		
+		tankImages[tankInfo[3] - 1][tankInfo[2] - 1].paintIcon(this, g, tankInfo[0], tankInfo[1]);
 		
 		
 		g.setColor(Color.white);
@@ -73,19 +78,24 @@ public class Canvas extends JPanel {
 	}
 	
 	private void setTankImages() {
+		tankImages = new ImageIcon[4][4];
 		BufferedImage temp;
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 1; i <= 4; i++) {
+			for (int j = 1; j <= 4; j++) {
 				try {
 					temp = ImageIO.read(Tank.class.getResourceAsStream("tank_" + i + "_direction_" + j + ".png"));
-					tankImages[i][j] = new ImageIcon(temp);
+					tankImages[i - 1][j - 1] = new ImageIcon(temp);
 				} catch (IOException e) {  System.out.println("Error loading tank images.");  }
 			}
 		}
 	}
 	
 	public void drawTank(int x, int y, int dir, int num) {
-		tankImages[num][dir].paintIcon(this, g, x, y);
+		tankInfo[0] = x;
+		tankInfo[1] = y;
+		tankInfo[2] = dir;
+		tankInfo[3] = num;
+		repaint();
 	}
 
 	public void drawBullet(int x, int y) {
