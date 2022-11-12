@@ -15,6 +15,7 @@ public class Tank extends GameObject {
 	int[] moveY = {-10, 0, 10, 0};
 	public Tank(int x) {
 		super(x);
+		System.out.println("tank created");
 //		setImages();
 //		curImage = images[getDir() - 1];
 	}
@@ -34,6 +35,10 @@ public class Tank extends GameObject {
 		if (i <= 4) {
 			setImageAndMove(i);
 		}
+	}
+	
+	public String toString() {
+		return "tank:true," + super.toString();
 	}
 	
 	public Rectangle getHitBox() {

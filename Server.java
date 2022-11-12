@@ -1,6 +1,8 @@
 package XTank;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.DataOutputStream;
@@ -16,6 +18,7 @@ import java.net.InetAddress;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 /**
  * A server for a multi-player tic tac toe game. Loosely based on an example in
@@ -72,9 +75,7 @@ public class Server {
 	}
 	
 	private static void startServer() {
-		System.out.println("server running");
 		try (var listener = new ServerSocket(port)) {
-			System.out.println("in try");
 			listener.setSoTimeout(30000);
 			var pool = Executors.newFixedThreadPool(4);
 			game = Game.getGame();
@@ -92,6 +93,7 @@ public class Server {
 }
 
 class Play implements Runnable {
+	private Timer timer;
 	private Player player;
 	private Game game;
 	private Socket socket;
@@ -100,20 +102,23 @@ class Play implements Runnable {
 		this.socket = socket;
 		this.player = player;
 		this.game = game;
+		timer = new Timer(16, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refreshAndSend();
+			}
+			
+			
+		});
+		timer.start();
 		game.addPlayer(player);
-		System.out.println("new player " + player.getPlayerNumber());
-//		game.setCurrentPlayer(you);
-//		if (game.getPlayer1() == null)
-//			game.setPlayer1(you);
-//		else
-//			game.setPlayer2(you);
 	}
 
 	@Override
 	public void run() {
 		try {
 			player.setInput(new DataInputStream(socket.getInputStream()));
-			System.out.println(player.getInput() == null);
 			player.setOutput(new DataOutputStream(socket.getOutputStream()));
 			player.getOutput().writeUTF("player " + player.getPlayerNumber());
 			processCommands();
@@ -126,9 +131,7 @@ class Play implements Runnable {
 	//public synchronized void process()
 
 	private void processCommands() {
-		System.out.println("processing commands");
 		while (true) {
-			System.out.println("new inpt");
 			String command = "";
 			try {
 				command = player.getInput().readUTF();
@@ -136,28 +139,29 @@ class Play implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(command);
 			if (command.startsWith("QUIT"))
 				return;
 			else {
-				if (!Server.gameStarted)
-					try {
-						player.getOutput().writeUTF("Game not yet started");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				else
-					processInput(command);
+				processInput(command);
 			}
 		}
 	}
 
-	private boolean processInput(String command) {
-		System.out.println("processing command");
-		return false;
+	private void processInput(String command) {
+		//System.out.println(command);
+		player.processInput(Character.getNumericValue(command.charAt(8)));
 	}
 
+	protected void refreshAndSend() {
+		DataOutputStream out = player.getOutput();
+		try {
+			out.writeUTF(player.getTank().toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 //	private void processMoveCommand(int location) 
 //	{
 //		try 

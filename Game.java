@@ -17,7 +17,6 @@ public class Game {
 		gameObjects = new ArrayList<>();
 		players = new Player[4];
 		barrier = new Rectangle(300, 100, 100, 25);
-		// TODO Could add some different map sizes that the user selects
 		mapSize = new Rectangle(0, 0, 635, 580);
 	}
 	
@@ -31,6 +30,7 @@ public class Game {
 	public int getCurPlayer() {  return curPlayers + 1;  }
 	
 	public void addPlayer(Player player) {
+		System.out.println("new player fdafsa");
 		players[curPlayers++] = player;
 	}
 	
@@ -38,7 +38,7 @@ public class Game {
 		gameObjects.add(gameObject);
 	}
 	
-	public void refresh() {
+	public synchronized void refresh() {
 		gameObjects.clear();
 		for (Player p : players) {
 			if (p != null) {

@@ -28,6 +28,7 @@ public class Player {
 		this.setHealth(DEFAULT_HEALTH);
 		playerObjects = new ArrayList<>();
 		tank = new Tank(playerNumber);
+		System.out.println(tank);
 		playerObjects.add(tank);
 	}
 
@@ -40,7 +41,7 @@ public class Player {
 	public void setHealth(int health) {  this.health = health;  }
 	
 	public String toString() {
-		return "playerNumber:" + playerNumber + "," + super.toString() + "health:" + health + "," + tank.toString();
+		return "health:" + health;
 	}
 	
 	public void setInput(DataInputStream dataInputStream) {  this.input = dataInputStream;  }

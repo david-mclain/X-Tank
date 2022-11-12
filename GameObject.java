@@ -75,7 +75,7 @@ public abstract class GameObject {
 	
 	public String toString() {
 		String toRet = "";
-		toRet += "dir:" + dir + ",x:" + x + ",y:" + y + ",";
+		toRet += "dir:" + dir + ",x:" + x + ",y:" + y;
 		return toRet;
 	}
 }

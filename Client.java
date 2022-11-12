@@ -56,14 +56,6 @@ public class Client {
 			public void keyTyped(KeyEvent e) {}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				//System.out.println("key pressed");
-				try {
-					out.writeUTF(playerNumber + "," + e.getKeyCode());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//out.print(playerNumber + "," + e.getKeyCode());
 				if (e.getKeyCode() == KeyEvent.VK_W) {
 					process(1);
 				}
@@ -86,14 +78,9 @@ public class Client {
 	}
 	
 	private void process(int i) {
-		//System.out.println("Processing: " + i);
 		try {
 			out.writeUTF("command:" + i + ",player:" + playerNumber);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//out.print("");
+		} catch (IOException e) {}
 	}
 
 	public void play() throws Exception {
@@ -106,15 +93,15 @@ public class Client {
 			System.out.println("created ui");
 			while (true) {
 				response = in.readUTF();
-				System.out.println(response);
+//				System.out.println(response);
 				if (response.startsWith("Game not")) {
 					JOptionPane.showMessageDialog(frame, "Game not yet started!");
 				}
 				else if (response.startsWith("bullet")) {
 					drawBullet(response);
 				}
-				else if (response.startsWith("player")) {
-					drawPlayer(response);
+				else if (response.startsWith("tank")) {
+					drawTank(response);
 				}
 //				if (response.startsWith("VALID_MOVE")) {
 //					messageLabel.setText("Valid move, please wait");
@@ -149,15 +136,27 @@ public class Client {
 			}
 			out.writeUTF("QUIT");
 		} 
-		catch (Exception e) {} 
+		catch (Exception e) {
+			e.printStackTrace();
+		} 
 		finally {
 			socket.close();
 			frame.dispose();
 		}
 	}
 	
-	private void drawPlayer(String response) {
-		//TODO
+	private void drawTank(String response) {
+		System.out.println(response);
+//		String[] temp = response.split(",");
+//		String[][] res = new String[temp.length][2];
+//		int i = 0;
+//		for (String s : temp) {
+//			String[] x = s.split(":");
+//			res[i][0] = x[0];
+//			res[i][1] = x[1];
+//		}
+////		// x, y, dir, num
+//		((GameUI) frame).drawTank(Integer.parseInt(res[2][1]), Integer.parseInt(res[3][1]), Integer.parseInt(res[1][1]), playerNumber);
 	}
 
 	private void drawBullet(String response) {

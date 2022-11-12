@@ -16,7 +16,7 @@ public class Canvas extends JPanel {
 	private ImageIcon[][] tankImages;
 	private Graphics g;
 	private BufferedImage image;
-	private ImageIcon icon;
+	private ImageIcon bullet;
 	Canvas() {
 		super();
 		//this.you = you;
@@ -82,6 +82,14 @@ public class Canvas extends JPanel {
 				} catch (IOException e) {  System.out.println("Error loading tank images.");  }
 			}
 		}
+	}
+	
+	public void drawTank(int x, int y, int dir, int num) {
+		tankImages[num][dir].paintIcon(this, g, x, y);
+	}
+
+	public void drawBullet(int x, int y) {
+		bullet.paintIcon(this, g, x, y);
 	}
 	
 }
