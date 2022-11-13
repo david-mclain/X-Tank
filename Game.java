@@ -1,3 +1,12 @@
+/**
+ * 
+ * @author David McLain
+ * 
+ * Game class uses Singleton pattern to create a new Game that players will connect to
+ * Controls all game state and processes anything that happens in game
+ *
+ */
+
 package XTank;
 
 import java.awt.Rectangle;
@@ -8,16 +17,17 @@ public class Game {
 	private Player[] players;
 	private int curPlayers;
 	private final int MAX_PLAYERS = 4;
-	private List<GameObject> gameObjects;
 	private static Game game;
 	List<Rectangle> obstacles; 
 	
 	int[] moveX = {0, 10, 0, -10};
 	int[] moveY = {-10, 0, 10, 0};
-	
+	/**
+	 * Instantiates new game
+	 * Can only be accessed through static call of getGame();
+	 */
 	private Game() {
 		curPlayers = 0;
-		gameObjects = new ArrayList<>();
 		players = new Player[4];
 		obstacles = new ArrayList<>();
 		obstacles.add(new Rectangle(0, 0, 650, 5));
@@ -27,50 +37,52 @@ public class Game {
 		obstacles.add(new Rectangle(150, 200, 350, 20));
 		obstacles.add(new Rectangle(150, 400, 350, 20));
 	}
-	
+	/**
+	 * Returns current Game
+	 * @return current Game
+	 */
 	public static Game getGame() {
 		if (game == null) {
 			game = new Game();
 		}
 		return game;
 	}
-	
-	public String getBounds() {
-		String ret = "";
-		for (Rectangle r : obstacles) {
-			ret = ret + (int)r.getX() + "," + (int)r.getY() + "," + (int)r.getWidth() + "," + r.getHeight() + ";";
-		}
-		return ret;
-	}
-	
+	/**
+	 * Returns next player in game
+	 * @return next player in game
+	 */
 	public int getCurPlayer() {  return curPlayers + 1;  }
-	
+	/**
+	 * Adds newly instantiated player to game
+	 * @param player - player to add to game
+	 */
 	public void addPlayer(Player player) {
 		players[curPlayers++] = player;
 	}
-	
-	public void addObject(GameObject gameObject) {
-		gameObjects.add(gameObject);
-	}
-	
+	/**
+	 * Refreshes game
+	 */
 	public synchronized void refresh() {
-		gameObjects.clear();
-		for (Player p : players) {
-			if (p != null) {
-				gameObjects.addAll(p.getObjects());
-			}
-		}
 		checkHitboxes();
 	}
-	
+	/**
+	 * Returns array of players
+	 * @return array of players
+	 */
 	public Player[] getPlayers() {
 		return players;
 	}
-	
+	/**
+	 * Returns specific player
+	 * @param i - player to return
+	 * @return specific player
+	 */
 	public Player getPlayer(int i) {
 		return players[i - 1];
 	}
-	
+	/**
+	 * Checks all hitboxes to see if any bullets hit tanks or obstacles
+	 */
 	private void checkHitboxes() {
 		for (int i = 0; i < players.length; i++) {
 			Player p = players[i];
@@ -106,15 +118,19 @@ public class Game {
 			}
 		}
 	}
-	
-	public List<GameObject> getGameObjects() {
-		return gameObjects;
-	}
-
+	/**
+	 * Returns true if max players joined, false otherwise
+	 * @return true if max players joined, false otherwise
+	 */
 	public boolean playersFull() {
 		return this.curPlayers == MAX_PLAYERS;
 	}
-
+	/**
+	 * Checks if move is in range that player is trying to do
+	 * @param x - direction player is trying to move
+	 * @param hitbox - hitbox of current player's tank
+	 * @return true if move can be done, false otherwise
+	 */
 	public boolean moveInRange(int x, Rectangle hitbox) {
 		Rectangle r = new Rectangle((int)hitbox.getX() + moveX[x - 1], (int)hitbox.getY() + moveY[x - 1], (int)hitbox.getWidth(), (int)hitbox.getHeight());
 		for (Rectangle a : obstacles) {
@@ -123,13 +139,20 @@ public class Game {
 		}
 		return true;
 	}
-
+	/**
+	 * Kills specified player
+	 * @param player - player to kill
+	 */
 	public void killPlayer(Player player) {
 		for (int i = 0; i < players.length; i++)
 			if (players[i] == player)
 				players[i] = null;
 	}
-
+	/**
+	 * Checks if player has won game
+	 * @param player - player to compare
+	 * @return true if player won, false otherwise
+	 */
 	public boolean checkWin(Player player) {
 		if (curPlayers <= 1)
 			return false;

@@ -1,9 +1,16 @@
+/**
+ * 
+ * @author David McLain
+ * 
+ * Canvas class is used for any drawing to do in game
+ *
+ */
+
 package XTank;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,18 +21,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 
-@SuppressWarnings("serial")
 public class Canvas extends JPanel {
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = -7523415719212105167L;
 	private ImageIcon[][] tankImages;
 	private List<List<Integer>> tankInfo;
 	private List<List<Integer>> bullets;
 	private ImageIcon bullet;
-	List<Rectangle> obstacles = MapCreator.get();
+	/**
+	 * Instantiates new Canvas
+	 */
 	Canvas() {
 		super();
-		//this.you = you;
-//		obstacles = new ArrayList<>();
-//		obstacles.addAll(MapCreator.get());
 		tankInfo = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
 			List<Integer> temp = new ArrayList<>();
@@ -40,7 +49,9 @@ public class Canvas extends JPanel {
 		setTankImages();
 		setBulletImage();
 	}
-	
+	/**
+	 * Paints canvas with all tanks and bullets in play
+	 */
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, 800, 630);
 		g.setColor(Color.black);
@@ -67,7 +78,9 @@ public class Canvas extends JPanel {
 		}
 		bullets.clear();
 	}
-
+	/**
+	 * Sets images for all tanks in all directions
+	 */
 	private void setTankImages() {
 		tankImages = new ImageIcon[4][4];
 		BufferedImage temp;
@@ -80,7 +93,9 @@ public class Canvas extends JPanel {
 			}
 		}
 	}
-	
+	/**
+	 * Sets image for bullets
+	 */
 	private void setBulletImage() {
 		BufferedImage temp = null;
 		try {
@@ -89,7 +104,10 @@ public class Canvas extends JPanel {
 		catch (IOException e) {  System.out.println("Error loading tank images.");  }
 		bullet = new ImageIcon(temp);
 	}
-
+	/**
+	 * Draws GameObject's on canvas that server sent to client
+	 * @param response - what to draw and where
+	 */
 	public void drawStuff(String response) {
 		String[] a = response.split("\\+");
 		for (String s : a) {
@@ -97,7 +115,11 @@ public class Canvas extends JPanel {
 		}
 		repaint();
 	}
-
+	/**
+	 * Sets information of current Tank to draw
+	 * @param substring - All information needed to draw Tank
+	 * @param num - number of player for Tank to draw
+	 */
 	private void setTankInfo(String substring, int num) {
 		List<Integer> cur = tankInfo.get(num);
 		String[] playerInfo = substring.split(";");

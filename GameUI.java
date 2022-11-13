@@ -1,32 +1,38 @@
+/**
+ * 
+ * @author David McLain
+ * 
+ * GameUI class is used for any UI related things for client
+ *
+ */
+
 package XTank;
 
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
 public class GameUI extends JFrame {
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 2785089710457159677L;
 	private JPanel canvas;
-	private Game game;
+	/**
+	 * Instantiates new GameUI
+	 */
 	public GameUI() {
 		canvas = new Canvas();
-		game = Game.getGame();
 		this.setBounds(10, 10, 800, 630);
 		this.setBackground(Color.gray);
 		this.setResizable(false);
 		this.add(canvas);
 		this.setVisible(true);
 	}
-	
-	public void move(int x) {
-		game.refresh();
-		canvas.repaint();
-	}
-
-	public void drawStuff(String response, int playerNumber) {
-		((Canvas) canvas).drawStuff(response);
-	}
-
+	/**
+	 * Makes canvas draw information based on response from server
+	 * @param response - response from server
+	 */
 	public void drawStuff(String response) {
 		((Canvas) canvas).drawStuff(response);
 	}

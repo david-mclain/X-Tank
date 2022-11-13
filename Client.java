@@ -1,3 +1,12 @@
+/**
+ * 
+ * @author David McLain
+ * 
+ * Client class is used for processing any information player does and sending it to the server
+ * Recieves information from server and updates UI as necessary
+ *
+ */
+
 package XTank;
 
 import java.awt.event.KeyEvent;
@@ -19,11 +28,17 @@ public class Client {
 	private DataOutputStream out;
 	private int playerNumber;
 	private final int port = 58901;
-		
+	/**
+	 * Instantiates new client to connect to specified address
+	 * @param serverAddress - address to connect to
+	 */
 	public Client(String serverAddress) throws IllegalArgumentException {
 		connect(serverAddress);
 	}
-	
+	/**
+	 * Connects to server on specified address
+	 * @param serverAddress - address to connect to
+	 */
 	private void connect(String serverAddress) {
 		try {
 			socket = new Socket(serverAddress, port);
@@ -35,7 +50,9 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Creates UI for client
+	 */
 	private void createUI() {
 		frame = new GameUI();
 		frame.setTitle("XTank: Player " + playerNumber);
@@ -64,13 +81,18 @@ public class Client {
 			public void keyReleased(KeyEvent e) {}
 		});
 	}
-	
+	/**
+	 * Information to process from user
+	 * @param i - information from user
+	 */
 	private void process(int i) {
 		try {
 			out.writeUTF("command:" + i + ",player:" + playerNumber);
 		} catch (IOException e) {}
 	}
-
+	/**
+	 * Begins playing game
+	 */
 	public void play() throws Exception {
 		try {
 			String response = in.readUTF();
@@ -107,11 +129,17 @@ public class Client {
 			frame.dispose();
 		}
 	}
-	
+	/**
+	 * Tells UI to draw information from server response
+	 * @param response - information to draw
+	 */
 	private void drawStuff(String response) {
 		((GameUI) frame).drawStuff(response);
 	}
-
+	/**
+	 * Main method to start up client script
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			Client client = new Client("127.0.0.1");

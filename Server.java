@@ -1,3 +1,12 @@
+/**
+ * 
+ * @author David McLain
+ * 
+ * Server class is used for having game and updating based on any information clients send in
+ * Sends information to clients 60 times per second with all information of game state
+ *
+ */
+
 package XTank;
 
 import java.awt.Font;
@@ -18,6 +27,10 @@ public class Server {
 	private static JLabel serverIP;
 	private static final int port = 58901;
 	public static boolean gameStarted;
+	/**
+	 * Main method to start up server script
+	 * @param args - not used for server
+	 */
 	public static void main(String[] args) {
 		try {
 			createServerUI();
@@ -25,7 +38,9 @@ public class Server {
 		gameStarted = true;
 		startServer();
 	}
-	
+	/**
+	 * Creates UI of server
+	 */
 	private static void createServerUI() throws UnknownHostException {
 		String ip = InetAddress.getLocalHost().toString().split("/")[1];
 		serverUI = new JFrame("XTank Server");
@@ -40,7 +55,9 @@ public class Server {
 		serverUI.setSize(400, 400);
 		serverUI.setVisible(true);
 	}
-	
+	/**
+	 * Starts server listening on specified address and port
+	 */
 	private static void startServer() {
 		try (var listener = new ServerSocket(port)) {
 			listener.setSoTimeout(30000);

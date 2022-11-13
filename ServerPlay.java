@@ -1,3 +1,11 @@
+/**
+ * 
+ * @author David McLain
+ * 
+ * Server play class is used to create new thread for each client to process information
+ *
+ */
+
 package XTank;
 
 import java.awt.event.ActionEvent;
@@ -14,7 +22,12 @@ public class ServerPlay implements Runnable {
 	private Player player;
 	private Game game;
 	private Socket socket;
-
+	/**
+	 * Instantiates new ServerPlay
+	 * @param socket - socket of client connected to
+	 * @param player - player of client
+	 * @param game - game to send information to from client
+	 */
 	public ServerPlay(Socket socket, Player player, Game game) {
 		this.socket = socket;
 		this.player = player;
@@ -31,7 +44,9 @@ public class ServerPlay implements Runnable {
 		timer.start();
 		game.addPlayer(player);
 	}
-
+	/**
+	 * Run method of thread
+	 */
 	@Override
 	public void run() {
 		try {
@@ -44,7 +59,9 @@ public class ServerPlay implements Runnable {
 			e.printStackTrace();
 		} 
 	}
-
+	/**
+	 * Processes all information recieved from client
+	 */
 	private void processCommands() {
 		while (true) {
 			String command = "";
@@ -60,13 +77,18 @@ public class ServerPlay implements Runnable {
 			}
 		}
 	}
-
+	/**
+	 * Processes input from client
+	 * @param command - what client sent
+	 */
 	private void processInput(String command) {
 		int x = Character.getNumericValue(command.charAt(8));
 		if (x == 5 || (x <= 4 && game.moveInRange(x, player.getTank().getHitBox())))
 			player.processInput(x);
 	}
-
+	/**
+	 * Refreshes game and player 60 times per second
+	 */
 	protected void refreshAndSend() {
 		player.update();
 		game.refresh();
