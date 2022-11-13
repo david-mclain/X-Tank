@@ -37,13 +37,8 @@ public class Canvas extends JPanel {
 		super();
 		tankInfo = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
-			List<Integer> temp = new ArrayList<>();
-			temp.add(0);
-			temp.add(0);
-			temp.add(0);
-			temp.add(0);
-			temp.add(0);
-			tankInfo.add(temp);
+			tankInfo.add(new ArrayList<>());
+			
 		}
 		bullets = new ArrayList<>();
 		setTankImages();
@@ -66,11 +61,11 @@ public class Canvas extends JPanel {
 		g.drawString("Health", 700,30);
 		int i = 0;
 		for (List<Integer> l : tankInfo) {
-			if (l.get(2) != 0) {
-				g.drawString("Player " + i + ": " + l.get(0), 670, 60 + i * 20);
-			}
-			if (l.get(0) > 0)
+			if (l.size() != 0) {
+				g.drawString("Player " + (i + 1) + ": " + l.get(0), 670, 60 + i * 20);
 				tankImages[l.get(4) - 1][l.get(3) - 1].paintIcon(this, g, l.get(1), l.get(2));
+			}
+			l.clear();
 			i++;
 		}
 		for (List<Integer> b : bullets) {
@@ -121,14 +116,14 @@ public class Canvas extends JPanel {
 	 * @param num - number of player for Tank to draw
 	 */
 	private void setTankInfo(String substring, int num) {
-		List<Integer> cur = tankInfo.get(num);
+		List<Integer> cur = tankInfo.get(num - 1);
 		String[] playerInfo = substring.split(";");
 		String[] tank = playerInfo[0].split(",");
-		cur.set(0, Integer.parseInt(tank[0]));
-		cur.set(1, Integer.parseInt(tank[1]));
-		cur.set(2, Integer.parseInt(tank[2]));
-		cur.set(3, Integer.parseInt(tank[3]));
-		cur.set(4, num);
+		cur.add(Integer.parseInt(tank[0]));
+		cur.add(Integer.parseInt(tank[1]));
+		cur.add(Integer.parseInt(tank[2]));
+		cur.add(Integer.parseInt(tank[3]));
+		cur.add(num);
 		for (int i = 1; i < playerInfo.length; i++) {
 			String[] temp = playerInfo[i].split(",");
 			List<Integer> a = new ArrayList<>();
