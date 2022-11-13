@@ -50,26 +50,22 @@ public class Canvas extends JPanel {
 		g.drawRect(150, 200, 350, 20);
 		g.drawRect(150, 400, 350, 20);
 		
+		g.setColor(Color.white);
+		g.setFont(new Font("Monospaced",Font.BOLD, 15));
+		g.drawString("Health", 700,30);
+		int i = 0;
 		for (List<Integer> l : tankInfo) {
-			if (l.get(0) != 0)
+			if (l.get(2) != 0) {
+				g.drawString("Player " + i + ": " + l.get(0), 670, 60 + i * 20);
+			}
+			if (l.get(0) > 0)
 				tankImages[l.get(4) - 1][l.get(3) - 1].paintIcon(this, g, l.get(1), l.get(2));
+			i++;
 		}
 		for (List<Integer> b : bullets) {
-			System.out.println("painting bullet");
 			bullet.paintIcon(this, g, b.get(0), b.get(1));
 		}
 		bullets.clear();
-		
-		g.setColor(Color.white);
-		g.setFont(new Font("Monospaced",Font.BOLD, 15));
-		g.drawString("Scores", 700,30);
-
-//		g.drawString("Player 1:  0", 670,60);
-//		g.drawString("Player 2:  0", 670,90);
-		
-		g.drawString("Health", 700,150);
-//		g.drawString("Player 1:  0", 670,180);
-//		g.drawString("Player 2:  0", 670,210);
 	}
 
 	private void setTankImages() {

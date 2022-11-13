@@ -1,27 +1,16 @@
 package XTank;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.MediaTracker;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.DataOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Scanner;
-
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 public class Client {
 	private JFrame frame;
@@ -107,9 +96,12 @@ public class Client {
 			}
 			out.writeUTF("QUIT");
 		} 
+		catch (SocketException e) {
+			JOptionPane.showMessageDialog(frame, "Error. Connection to server closed");
+		}
 		catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		finally {
 			socket.close();
 			frame.dispose();
@@ -124,7 +116,11 @@ public class Client {
 		try {
 			Client client = new Client("127.0.0.1");
 			client.play();
-		} catch (Exception e) {
+		}
+		catch (ConnectException e) {
+			JOptionPane.showMessageDialog(null, "Error connecting to server.");
+		}
+		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error. Too many players in server.");
 		}
 	}

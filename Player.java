@@ -2,10 +2,8 @@ package XTank;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import javax.swing.ImageIcon;
 
 public class Player {

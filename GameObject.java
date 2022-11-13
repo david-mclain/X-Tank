@@ -1,11 +1,8 @@
 package XTank;
 
 import java.awt.Rectangle;
-import java.io.Serializable;
-
 import javax.swing.ImageIcon;
 
-@SuppressWarnings("serial")
 public abstract class GameObject {
 	private int x;
 	private int y;
@@ -77,8 +74,7 @@ public abstract class GameObject {
 	public abstract Rectangle getHitBox();
 	
 	public String toString() {
-		String toRet = x + "," + y + "," + dir;
-		return toRet;
+		return x + "," + y + "," + dir;
 	}
 }
 ;

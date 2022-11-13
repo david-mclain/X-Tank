@@ -11,7 +11,6 @@ public class Game {
 	private List<GameObject> gameObjects;
 	private static Game game;
 	List<Rectangle> obstacles; 
-	private Rectangle barrier, mapSize;
 	
 	int[] moveX = {0, 10, 0, -10};
 	int[] moveY = {-10, 0, 10, 0};
@@ -27,8 +26,6 @@ public class Game {
 		obstacles.add(new Rectangle(650, 0, 5, 580));
 		obstacles.add(new Rectangle(150, 200, 350, 20));
 		obstacles.add(new Rectangle(150, 400, 350, 20));
-		barrier = new Rectangle(300, 100, 100, 25);
-		mapSize = new Rectangle(0, 0, 635, 580);
 	}
 	
 	public static Game getGame() {
@@ -74,26 +71,37 @@ public class Game {
 		return players[i - 1];
 	}
 	
-	public void updatePlayer() {
-		
-	}
-	
-	private void checkHitboxes() {		
-		for (GameObject obj : gameObjects) {
-			if (obj instanceof Bullet) {
-				Bullet bullet = (Bullet) obj;
-				for (Player p : players) {
-					if (p != null) {
-						for (Rectangle r : obstacles) {
-							if (r.intersects(bullet.getHitBox()))
-								p.removeBullet(bullet);
-						}
+	private void checkHitboxes() {
+		for (int i = 0; i < players.length; i++) {
+			Player p = players[i];
+			if (p == null)
+				continue;
+			List<Bullet> bullets = p.getBullets();
+			boolean[] remove = new boolean[bullets.size()];
+			if (bullets.size() == 0) {
+				continue;
+			}
+			for (int l = 0; l < bullets.size(); l++) {
+				Bullet b = bullets.get(l);
+				for (Rectangle r : obstacles) {
+					if (b.getHitBox().intersects(r)) {
+						remove[l] = true;
 					}
-					if (p != null && bullet.getHitBox().intersects(p.getTank().getHitBox())) {
-						System.out.println("DIE");
-						p.removeBullet(bullet);
-						p.setHealth(p.getHealth() - 1);
+				}
+				if (remove[l])
+					continue;
+				for (Player temp : players) {
+					if (temp == null) 
+						continue;
+					if (b.getHitBox().intersects(temp.getTank().getHitBox())) {
+						temp.setHealth(temp.getHealth() - 1);
+						remove[l] = true;
 					}
+				}
+			}
+			for (int k = remove.length - 1; k >= 0; k--) {
+				if (remove[k]) {
+					bullets.remove(k);
 				}
 			}
 		}
@@ -111,6 +119,22 @@ public class Game {
 		Rectangle r = new Rectangle((int)hitbox.getX() + moveX[x - 1], (int)hitbox.getY() + moveY[x - 1], (int)hitbox.getWidth(), (int)hitbox.getHeight());
 		for (Rectangle a : obstacles) {
 			if (r.intersects(a))
+				return false;
+		}
+		return true;
+	}
+
+	public void killPlayer(Player player) {
+		for (int i = 0; i < players.length; i++)
+			if (players[i] == player)
+				players[i] = null;
+	}
+
+	public boolean checkWin(Player player) {
+		if (curPlayers <= 1)
+			return false;
+		for (Player p : players) {
+			if (p != null && p != player)
 				return false;
 		}
 		return true;

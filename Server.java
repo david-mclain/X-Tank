@@ -1,36 +1,27 @@
 package XTank;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.DataOutputStream;
 import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.net.BindException;
 import java.net.InetAddress;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.Timer;
+import javax.swing.JOptionPane;
 
 public class Server {
 	private static Game game;
 	private static JFrame serverUI;
-	private static JButton start;
-	private static JButton startGame;
 	private static JLabel serverIP;
 	private static final int port = 58901;
 	public static boolean gameStarted;
-	public static void main(String[] args) throws Exception {
-		MapCreator.create();
-		createServerUI();
+	public static void main(String[] args) {
+		try {
+			createServerUI();
+		} catch (UnknownHostException e) {}
 		gameStarted = true;
 		startServer();
 	}
@@ -56,90 +47,17 @@ public class Server {
 			var pool = Executors.newFixedThreadPool(4);
 			game = Game.getGame();
 			while (true) {
-				pool.execute(new Play(listener.accept(), new Player(game.getCurPlayer()), game));
+				pool.execute(new ServerPlay(listener.accept(), new Player(game.getCurPlayer()), game));
 			}
-		} catch (IOException e) {
+		} 
+		catch (BindException e) {
+			JOptionPane.showMessageDialog(serverUI, "Error! Address is already in use");
+		}
+		catch (SocketTimeoutException e) {
+			JOptionPane.showMessageDialog(serverUI, "Warning! Server no longer accpepting new players.");
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private static void startGame() {
-		gameStarted = true;
-	}
-}
-
-class Play implements Runnable {
-	private Timer timer;
-	private Player player;
-	private Game game;
-	private Socket socket;
-
-	public Play(Socket socket, Player player, Game game) {
-		this.socket = socket;
-		this.player = player;
-		this.game = game;
-		timer = new Timer(16, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				refreshAndSend();
-			}
-			
-			
-		});
-		timer.start();
-		game.addPlayer(player);
-	}
-
-	@Override
-	public void run() {
-		try {
-			player.setInput(new DataInputStream(socket.getInputStream()));
-			player.setOutput(new DataOutputStream(socket.getOutputStream()));
-			player.getOutput().writeUTF("player " + player.getPlayerNumber());
-			processCommands();
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		} 
-	}
-
-	private void processCommands() {
-		while (true) {
-			String command = "";
-			try {
-				command = player.getInput().readUTF();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			if (command.startsWith("QUIT"))
-				return;
-			else {
-				processInput(command);
-			}
-		}
-	}
-
-	private void processInput(String command) {
-		int x = Character.getNumericValue(command.charAt(8));
-		if (x == 5 || (x <= 4 && game.moveInRange(x, player.getTank().getHitBox())))
-			player.processInput(x);
-	}
-
-	protected void refreshAndSend() {
-		player.update();
-		game.refresh();
-		DataOutputStream out = player.getOutput();
-		Player[] players = game.getPlayers();
-		String s = "";
-		for (int i = 0; i < players.length; i++) {
-			Player p = players[i];
-			if (p != null) {
-				s += p.toString() + "+";
-			}
-		}
-		try {
-			out.writeUTF(s);
-		} catch (IOException e) {}
-	}	
 }
