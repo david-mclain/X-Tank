@@ -38,25 +38,11 @@ public class Server {
 	private static void createServerUI() throws UnknownHostException {
 		String ip = InetAddress.getLocalHost().toString().split("/")[1];
 		serverUI = new JFrame("XTank Server");
-//		start = new JButton();
-//		start.setFocusable(false);
-//		start.setText("Start Server");
-//		start.setFont(new Font("Monospaced", Font.PLAIN, 15));
-//		start.addActionListener(e -> startServer());
-//		start.setBounds(25, 25, 150, 30);
-//		startGame = new JButton();
-//		startGame.setFocusable(false);
-//		startGame.setText("Start Game");
-//		startGame.setFont(new Font("Monospaced", Font.PLAIN, 15));
-//		startGame.addActionListener(e -> startGame());
-//		startGame.setBounds(200, 25, 150, 30);
 		serverIP = new JLabel();
 		serverIP.setFont(new Font("Monospaced", Font.PLAIN, 16));
 		serverIP.setBounds(40, 75, 300, 50);
 		serverIP.setText("IP Address: " + ip + ":" + port);
 		serverIP.setVisible(true);
-//		serverUI.add(startGame);
-//		serverUI.add(start);
 		serverUI.add(serverIP);
 		serverUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		serverUI.setLayout(null);
@@ -124,7 +110,6 @@ class Play implements Runnable {
 			try {
 				command = player.getInput().readUTF();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (command.startsWith("QUIT"))
@@ -156,40 +141,5 @@ class Play implements Runnable {
 		try {
 			out.writeUTF(s);
 		} catch (IOException e) {}
-	}
-	
-//	private void processMoveCommand(int location) 
-//	{
-//		try 
-//		{
-//			move(location, you);
-//			you.getOutput().println("VALID_MOVE");
-//			opponent.getOutput().println("OPPONENT_MOVED " + location);
-//			if (true) 
-//			{
-//				you.getOutput().println("VICTORY");
-//				opponent.getOutput().println("DEFEAT");
-//			} 
-//			else if (true) 
-//			{
-//				you.getOutput().println("TIE");
-//				opponent.getOutput().println("TIE");
-//			}
-//		} 
-//		catch (IllegalStateException e) 
-//		{
-//			you.getOutput().println("MESSAGE " + e.getMessage());
-//		}
-//	}
-//
-//	public synchronized void move(Player player) 
-//	{
-//		if (player != game.getCurrentPlayer()) {
-//			throw new IllegalStateException("Not your turn");
-//		} else if (game.getBoard()[location] != null) {
-//			throw new IllegalStateException("Cell already occupied");
-//		}
-//		game.getBoard()[location] = game.getCurrentPlayer();
-//		game.setCurrentPlayer(opponent);
-//	}		
+	}	
 }

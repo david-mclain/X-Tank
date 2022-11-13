@@ -43,7 +43,6 @@ public class Game {
 		for (Rectangle r : obstacles) {
 			ret = ret + (int)r.getX() + "," + (int)r.getY() + "," + (int)r.getWidth() + "," + r.getHeight() + ";";
 		}
-		//for ();
 		return ret;
 	}
 	
@@ -79,25 +78,17 @@ public class Game {
 		
 	}
 	
-	private void checkHitboxes() {
-		boolean ex = false;
+	private void checkHitboxes() {		
 		for (GameObject obj : gameObjects) {
-			// If the type is a bullet, check if its hits a player
 			if (obj instanceof Bullet) {
 				Bullet bullet = (Bullet) obj;
-				for (Rectangle r : obstacles) {
-					if (bullet.getHitBox().intersects(r)) {
-						System.out.println("inter");
-						obj = null;
-						ex = true;
-						break;
-					}
-				}
-				if (ex)
-					continue;
-				// Check if bullet hits any players
 				for (Player p : players) {
-					// Check if bullet intersects with player
+					if (p != null) {
+						for (Rectangle r : obstacles) {
+							if (r.intersects(bullet.getHitBox()))
+								p.removeBullet(bullet);
+						}
+					}
 					if (p != null && bullet.getHitBox().intersects(p.getTank().getHitBox())) {
 						System.out.println("DIE");
 						p.removeBullet(bullet);
@@ -111,25 +102,6 @@ public class Game {
 	public List<GameObject> getGameObjects() {
 		return gameObjects;
 	}
-	/*
-	 * class Game 
-{
-	// Board cells numbered 0-8, top to bottom, left to right; null if empty
-	private Player[] board = new Player[9];
-	private Player player1 = null;
-	private Player player2 = null;
-	private Player currentPlayer = null;
-	
-	public Player[] getBoard() {return board;}
-	public Player getCurrentPlayer() {return currentPlayer;}
-	public void setCurrentPlayer(Player player) {currentPlayer = player;}
-	public Player getPlayer1(){return player1;}
-	public void setPlayer1(Player player) {player1 = player;}
-	public Player getPlayer2(){return player2;}
-	public void setPlayer2(Player player) {player2= player;}
-}
-	 * 
-	 */
 
 	public boolean playersFull() {
 		return this.curPlayers == MAX_PLAYERS;

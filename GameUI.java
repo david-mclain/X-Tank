@@ -30,7 +30,7 @@ public class GameUI extends JFrame {
 	}
 
 	public void drawStuff(String response, int playerNumber) {
-		((Canvas) canvas).drawStuff(response, playerNumber);
+		((Canvas) canvas).drawStuff(response);
 	}
 
 	public void drawStuff(String response) {

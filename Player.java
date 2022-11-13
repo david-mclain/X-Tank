@@ -22,7 +22,6 @@ public class Player {
 	private List<GameObject> playerObjects;
 	
 	public Player(int playerNumber) {
-		//super(playerNumber);
 		bullets = new ArrayList<Bullet>();
 		this.setPlayerNumber(playerNumber);
 		this.setHealth(DEFAULT_HEALTH);
@@ -61,13 +60,10 @@ public class Player {
 		if (x <= 4) {
 			tank.processInput(x);
 		}
-		// Checks if there are less than 3 bullets from this player currently
 		else if (x == 5 && bullets.size() < 3) {
-			//playerObjects.remove(bullet);
 			Bullet bullet = new Bullet(tank.getX(), tank.getY(), tank.getDir());
 			bullets.add(bullet);
 			playerObjects.add(bullet);
-			//game.addObject(bullet);
 		}
 	}
 	

@@ -90,49 +90,20 @@ public class Client {
 			createUI();
 			while (true) {
 				response = in.readUTF();
-//				System.out.println(response);
 				if (response.startsWith("Game not")) {
 					JOptionPane.showMessageDialog(frame, "Game not yet started!");
 				}
+				else if (response.startsWith("win")){
+					JOptionPane.showMessageDialog(frame, "You win!");
+					break;
+				}
+				else if (response.startsWith("died")) {
+					JOptionPane.showMessageDialog(frame, "You died!");
+					break;
+				}
 				else {
 					drawStuff(response);
-				}
-//				else if (response.startsWith("bullet")) {
-//					drawBullet(response);
-//				}
-//				else if (response.startsWith("tank")) {
-//					drawTank(response);
-//				}
-//				if (response.startsWith("VALID_MOVE")) {
-//					messageLabel.setText("Valid move, please wait");
-//					currentSquare.setText(mark);
-//					currentSquare.repaint();
-//				} 
-//				else if (response.startsWith("OPPONENT_MOVED")) {
-//					var loc = Integer.parseInt(response.substring(15));
-//					board[loc].setText(opponentMark);
-//					board[loc].repaint();
-//					messageLabel.setText("Opponent moved, your turn");
-//				} 
-//				else if (response.startsWith("MESSAGE")) {
-//					messageLabel.setText(response.substring(8));
-//				} 
-				if (response.startsWith("VICTORY")) {
-					JOptionPane.showMessageDialog(frame, "Winner Winner");
-					break;
 				} 
-				else if (response.startsWith("DEFEAT")) {
-					JOptionPane.showMessageDialog(frame, "Sorry you lost");
-					break;
-				} 
-				else if (response.startsWith("TIE")) {
-					JOptionPane.showMessageDialog(frame, "Tie");
-					break;
-				} 
-				else if (response.startsWith("OTHER_PLAYER_LEFT")) {
-					JOptionPane.showMessageDialog(frame, "Other player left");
-					break;
-				}
 			}
 			out.writeUTF("QUIT");
 		} 
@@ -146,12 +117,7 @@ public class Client {
 	}
 	
 	private void drawStuff(String response) {
-		//System.out.println(response);
-//		String[] a = response.split("\\+");
-//		for (String s : a)
-//			((GameUI) frame).drawStuff(s.substring(1), Character.getNumericValue(s.charAt(0)));
 		((GameUI) frame).drawStuff(response);
-		//((GameUI) frame).drawStuff(response, playerNumber);
 	}
 
 	public static void main(String[] args) {
